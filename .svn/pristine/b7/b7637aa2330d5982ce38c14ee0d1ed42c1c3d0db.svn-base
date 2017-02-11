@@ -1,0 +1,83 @@
+
+	<div id="encoderEtudiant">
+		
+		<div id="page-wrapper" class="col-lg-8 md-6">
+		<form method="post" class="form-horizontal" role="form" id="formEtudiant">
+		<h2 class="col-sm-offset-4">Encoder Données étudiant</h2>
+			<div class="form-group">
+				<label class="control-label col-sm-3" for="text">Nom : </label>
+				<div class="col-sm-7">
+					<input type="text" id="nomId" name="nom" class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-3" for="text">Prenom : </label>
+				<div class="col-sm-7">
+					<input type="text" id="prenomId" name="prenom" class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-3" for="date">Date de naissance : </label>
+				<div class="col-sm-7">
+					<input type="date" id="dateId" name="date" class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-3" for="text">Nationalité : </label>
+				<div class="col-sm-7">
+					<input type="text" id="natId" name="nationalite" class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-3" for="phone">Téléphone : </label>
+				<div class="col-sm-7">
+					<input type="phone" id="phoneId" name="phone" class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-3" for="email">Email : </label>
+				<div class="col-sm-7">
+					<input type="text" id="emailId" name="email" class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-3" for="number">Nombre d'années réussies : </label>
+
+				<div class="col-sm-7">
+					<input type="number" min="0" max="2" id="emailId" name="email" class="form-control">
+				</div> 
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-3" for="radio">Sexe :
+					</label>
+					<div class="row col-sm-7">
+					H <input type="radio" name="sexe" value="M"> 
+					F <input type="radio" name="sexe" value="F">
+					</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-3" for="text">Compte IBAN:</label>
+				<div class="col-sm-7">
+					<input type="text" class="form-control" id="compte" name="numCompte">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-3" for="text">Titulaire:</label>
+				<div class="col-sm-7">
+					<input type="text" class="form-control" name="titulaire" id="titulaire" placeholder="facultatif">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-3" for="password">Code Bic:</label>
+				<div class="col-sm-7">
+					<input type="text" class="form-control" name="BIC" id="bic" maxlength="3">
+				</div>
+			</div>
+			<div class="col-sm-offset-9">
+				<button type="submit" class="btn btn-default" id="envoiEtud">Valider</button>
+			</div>
+		</form>
+		<section class="notification"></section>
+		</div>
+
+	</div>

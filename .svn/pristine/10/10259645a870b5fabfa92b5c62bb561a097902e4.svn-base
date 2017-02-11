@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="stylesheet"
+	href="javascript//jquery-ui-1.11.4.custom/jquery-ui.css"
+	type="text/css" media="all" />
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css"
+	type="text/css" media="all" />
+<link rel="stylesheet"
+	href="javascript//jquery-ui-1.11.4.custom/jquery-ui.min.css"
+	type="text/css" media="all" />
+<title>Encoder Etudiant</title>
+<link
+	href="bootstrap/bower_components/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link href="bootstrap/bower_components/metisMenu/dist/metisMenu.min.css"
+	rel="stylesheet">
+<link
+	href="bootstrap/bower_components/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css">
+</head>
+<body id="body">
+	<div id="wrapper">
+		<link href="bootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
+
+		<link
+			href="bootstrap/bower_components/font-awesome/css/font-awesome.min.css"
+			rel="stylesheet" type="text/css">
+		</head>
+		<body id="body">
+			<button type="button" data-toggle="modal"
+				data-target="#modalAnnulation" style="display: none;"></button>
+			<div class="modal fade" id="modalAnnulation" tabindex="-1"
+				role="dialog">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title">Motif annulation</h4>
+						</div>
+						<div class="modal-body">
+
+							<form id="motifAnnulation">
+								<input type="textarea" name="newRaison"
+									placeholder="Autre motif?" /> <select
+									class="form-control col-sm-3" id="listingAnnulation"
+									name="oldRaison">
+
+								</select>
+							</form>
+
+						</div>
+						<div class="modal-footer">
+							<button type="button" id="retourAnnulation"
+								class="btn btn-default" data-dismiss="modal">Retour</button>
+							<button type="button" data-dismiss="modal"
+								id="confirmationAnnulation" class="btn btn-primary">Enregister
+								mon annulation</button>
+						</div>
+					</div>
+					<!-- /.modal-content -->
+				</div>
+				<!-- /.modal-dialog -->
+			</div>
+			<!-- /.modal -->
+			<button type="button" data-toggle="modal"
+				data-target="#modalSelectionDate" style="display: none;"></button>
+			<div class="modal fade" id="modalSelectionDate" tabindex="-1"
+				role="dialog">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title">Selection date départ/retour</h4>
+						</div>
+						<div class="modal-body">
+							<form id="selectionDate">
+								<p>
+									Date départ: <input type="date" id="dateDepartConfirm">
+								</p>
+								<p>
+									Date retour:<input type="date" id="dateRetourConfirm">
+								</p>
+							</form>
+
+						</div>
+						<div class="modal-footer">
+							<button type="button" id="retourConfirm" class="btn btn-default"
+								data-dismiss="modal">Retour</button>
+							<button type="button" data-dismiss="modal"
+								id="confirmationMobilite" class="btn btn-primary">Enregister
+								ma confirmation</button>
+						</div>
+
+
+					</div>
+					<!-- /.modal-content -->
+				</div>
+				<!-- /.modal-dialog -->
+			</div>
+			<button type="button" data-toggle="modal"
+				data-target="#modalRehabiliterPartenaire" style="display: none;"></button>
+			<div class="modal fade" id="modalRehabiliterPartenaire" tabindex="-1"
+				role="dialog">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title">
+								Voulez vous réhabiliter le partenaire sélectionné ? pour
+								<h4 class='nomPartenaire'></h4>
+							</h4>
+						</div>
+						<div class="modal-footer">
+							<button type="button" id="retourConfirm" class="btn btn-default"
+								data-dismiss="modal">Retour</button>
+							<button type="button" data-dismiss="modal"
+								id="confirmerRehabilitation" class="btn btn-primary">Valider</button>
+						</div>
+
+
+					</div>
+					<!-- /.modal-content -->
+				</div>
+				<!-- /.modal-dialog -->
+			</div>
+			<!-- /.modal -->
+			<!-- /.modal -->
+			<button type="button" data-toggle="modal"
+				data-target="#modalPropositionPart" style="display: none;"></button>
+			<div class="modal fade" id="modalPropositionPart" tabindex="-1"
+				role="dialog">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title">Proposition partenaire</h4>
+						</div>
+						<div class="modal-body">
+							<p id="nomLegTestPart">Nom Legal:</p>
+							<p id="departTestPart">Département:</p>
+							<p id="typeTestPart">Type:</p>
+							<p id="villeTestPart">Ville:</p>
+							<p id="paysTestPart">Pays:</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" id="retourEncodPartConfirm"
+								class="btn btn-default" data-dismiss="modal">Retour</button>
+							<button type="button" data-dismiss="modal"
+								id="confirmationTestPartenaire" class="btn btn-primary">C'est
+								celui-ci !</button>
+						</div>
+
+
+					</div>
+					<!-- /.modal-content -->
+				</div>
+				<!-- /.modal-dialog -->
+			</div>
+			<!-- /.modal -->
+			<div id="wrapper">
+				<nav class="navbar	navbar-default navbar-static-top"
+					role="navigation">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse"
+							data-target=".navbar-collapse">
+							<span class="sr-only">Toggle navigation</span> <span
+								class="icon-bar"></span> <span class="icon-bar"></span> <span
+								class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="page.html">MobIpl</a>
+					</div>
+					<!-- /.navbar-header -->
+
+
+					<div class="navbar-default sidebar" role="navigation"
+						id="menuEtudiant">
+						<div class="sidebar-nav navbar-collapse">
+							<ul class="nav in" id="side-menu">
+
+								<li><a href="#" class="encoderInformations"> Encoder
+										informations</a></li>
+								<li><a href="#" class="encoderInfosPart"> Encoder
+										partenaire</a></li>
+								<li><a href="#" class="encoderDemande"> Soumettre
+										Demande</a></li>
+								<li><a href="#" class="afficherDemandes"> Afficher les
+										demandes</a></li>
+								<li><a href="#" class="afficherMobilite"> Afficher
+										mobilité </a></li>
+								<li><a href="#" class="effectuerRecherche"> Rechercher
+								</a></li>
+								<li><a href="#" class="deconnection">Se déconnecter</a></li>
+
+							</ul>
+						</div>
+						<!-- /.sidebar-collapse -->
+					</div>
+
+					<div class="navbar-default sidebar" role="navigation"
+						id="menuProfesseur">
+						<div class="sidebar-nav navbar-collapse">
+							<ul class="nav in" id="side-menu">
+
+								<li><a class="encoderInformations"> Encoder
+										informations</a></li>
+								<li><a href="#" class="encoderInfosPart"> Encoder
+										partenaire</a></li>
+								<li><a href="#" class="encoderDemande"> Soumettre
+										Demande</a></li>
+								<li><a href="#" class="listerPaiements">Payements
+										demandés</a></li>
+								<li><a href="#" class="listerDemandes"> Demandes
+										introduites </a></li>
+								<li><a href="#" class="suiviEtudiant"> Suivi étudiant </a></li>
+								<li><a href="#" class="effectuerRecherche"> Rechercher
+								</a></li>
+								<li><a href="#" class="listerPartenaires"> Liste
+										partenaires</a></li>
+								<li><a href="#" class="deconnection">Se déconnecter</a></li>
+							</ul>
+						</div>
+						<!-- /.sidebar-collapse -->
+					</div>
+					<!-- /.navbar-static-side -->
+					<!-- /.navbar-static-side -->
+				</nav>
+				<div id="listePartenaires">
+					<div id="page-wrapper" class="col-lg-10 md-10">
+						<div class="row">
+							<h3>Liste partenaires</h3>
+							<!-- /.panel-heading -->
+							<div class="panel-body">
+								<div class="dataTable_wrapper">
+									<div class="row">
+										<div class="col-sm-12">
+											<table style="width: 100%;"
+												aria-describedby="dataTables-example_info" role="grid"
+												class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline"
+												id="tablePartenaires" width="100%">
+												<thead>
+													<tr role="row">
+														<th aria-label="idPart: activate to sort column ascending"
+															style="width: 230px;" colspan="1" rowspan="1"
+															tabindex="0" class="sorting">Identifiant</th>
+														<th
+															aria-label="NomLegal: activate to sort column ascending"
+															style="width: 230px;" colspan="1" rowspan="1"
+															tabindex="0" class="sorting">Nom Légal</th>
+														<th aria-label="Ville activate to sort column ascending"
+															style="width: 230px;" colspan="1" rowspan="1"
+															tabindex="0" class="sorting">Ville</th>
+														<th aria-label="Pays: activate to sort column ascending"
+															style="width: 230px;" colspan="1" rowspan="1"
+															tabindex="0" class="sorting">Pays</th>
+														<th
+															aria-label="AjoutParEleve activate to sort column ascending"
+															style="width: 230px;" colspan="1" rowspan="1"
+															tabindex="0" class="sorting">Ajout par élève</th>
+														<th aria-label="Dispo activate to sort column ascending"
+															style="width: 230px;" colspan="1" rowspan="1"
+															tabindex="0" class="sorting">Disponible</th>
+													</tr>
+												</thead>
+
+												<tbody>
+
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+								<!-- /.table-responsive -->
+							</div>
+							<!-- /.panel-body -->
+							<button class="btn btn-default" id="supprimerPartenaire">Supprimer</button>
+							<button class="btn btn-default" id="rehabiliterPartenaire">Réhabiliter</button>
+						</div>
+					</div>
+				</div>
+
+				<div id="encoderEtudiant">
+
+					<div id="page-wrapper" class="col-lg-8 md-6">
+						<h2 class="col-sm-offset-4">Encoder Données étudiant</h2>
+						<form method="post" class="form-horizontal" role="form"
+							id="formEtudiant">
+
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="text">Nom : </label>
+								<div class="col-sm-7">
+									<input type="text" id="nomId" name="nom" class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="text">Prenom
+									: </label>
+								<div class="col-sm-7">
+									<input type="text" id="prenomId" name="prenom"
+										class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="date">Date de
+									naissance : </label>
+								<div class="col-sm-7">
+									<input type="date" id="dateId" name="date" class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="text">Nationalité
+									: </label>
+								<div class="col-sm-7">
+									<input type="text" id="natId" name="nationalite"
+										class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="text">Rue : </label>
+								<div class="col-sm-7">
+									<input type="text" id="rueeId" name="rue" class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="number">N° :
+								</label>
+								<div class="col-sm-7">
+									<input type="number" id="numeId" name="num"
+										class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="text">Boîte :
+								</label>
+								<div class="col-sm-7">
+									<input type="text" id="boiteeId" name="boite"
+										class="form-control" value="/">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="text">Region
+									: </label>
+								<div class="col-sm-7">
+									<input type="text" id="regioneId" name="region"
+										class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="text">Code
+									Postal: </label>
+								<div class="col-sm-7">
+									<input type="text" id="cpeId" name="cp" class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="text">Ville :
+								</label>
+								<div class="col-sm-7">
+									<input type="text" id="villeeId" name="ville"
+										class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="email">Email
+									: </label>
+								<div class="col-sm-7">
+									<input type="text" id="emaileId" name="email"
+										class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="number">Nombre
+									d'années réussies : </label>
+
+								<div class="col-sm-7">
+									<input type="number" min="0" max="2" id="nbrAnneeSuperieurId"
+										name="nbrAnneeSuperieur" class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="radio">Sexe :
+								</label>
+								<div class="row col-sm-7">
+									H <input type="radio" name="sexe" value="M"> F <input
+										type="radio" name="sexe" value="F">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="text">Compte
+									IBAN:</label>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" id="numCompteId"
+										name="numCompte">
+									<!-- pattern="^BE\d{14}$}#$" -->
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="text">Titulaire:</label>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" name="titulaire"
+										id="titulaireId" placeholder="facultatif">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="password">Code
+									Bic:</label>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" name="bic" id="bicId">
+								</div>
+							</div>
+							<div class="col-sm-offset-9">
+								<button type="submit" class="btn btn-default" id="envoiEtud">Valider</button>
+							</div>
+						</form>
+						<section class="notification"></section>
+					</div>
+
+				</div>
+				<div id="soumettreDemande">
+					<div id="page-wrapper" class="col-lg-8 md-6">
+						<h2 class="col-sm-offset-4" id="titre">Soumettre une demande</h2>
+						<form method="post" class="form-horizontal" role="form"
+							id="formDemandeMobilite">
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="text">Partenaire:
+								</label>
+								<div class="col-sm-7">
+									<select class="form-control col-sm-3" id="partenaireById"
+										name="nomPartenaire">
+										<option value="newPart" id="newPartenaireOption">Nouveau
+											partenaire ?</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="text">Type
+									mobilité: </label>
+								<div class="col-sm-4">
+									<select class="form-control col-sm-3" id="typeMobId"
+										name="typeMobilite">
+										<option>ERASMUS</option>
+										<option>FAME</option>
+										<option>ERABEL</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="text">Priorité:
+								</label>
+								<div class="col-sm-7">
+									<input type="number" id="prioriteId" name="ordrePreference"
+										class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="text">Type: </label>
+								<div class="col-sm-4">
+									<select class="form-control col-sm-3" id="typeSejourId"
+										name="typeDemande">
+										<option>SMS</option>
+										<option>SMP</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="text">Année:
+								</label>
+								<div class="col-sm-4">
+									<select class="form-control col-sm-3" id="anneeId"
+										name="anneeAcademique">
+
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="text">Periode:
+								</label>
+								<div class="col-sm-4">
+									<select class="form-control col-sm-3" id="periodeId"
+										name="periode">
+										<option>Q1</option>
+										<option>Q2</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-sm-offset-8">
+								<button type="submit" class="btn btn-default" id="send_demande"
+									class="send">Valider</button>
+							</div>
+						</form>
+						<section class="notification"></section>
+					</div>
+				</div>
+
+				<div id="encoderPartenaire">
+					<div id="page-wrapper" class="col-lg-8 md-6">
+						<form method="post" class="form-horizontal" role="form"
+							id="formPartenaire">
+							<h2 class="col-sm-offset-4">Encoder Données Partenaires</h2>
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="text">Nom
+									Légal : </label>
+								<div class="col-sm-7">
+									<input type="text" id="nomLegId" name="nomLegal"
+										class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="text">Nom
+									Affaire : </label>
+								<div class="col-sm-7">
+									<input type="text" id="nomAffaireId" name="nomAffaire"
+										class="form-control" placeholder="facultatif">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="text">Nom
+									Complet : </label>
+								<div class="col-sm-7">
+									<input type="text" id="nomCompId" name="nomComplet"
+										class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="text">Département
+									: </label>
+								<div class="col-sm-7">
+									<input type="text" id="departementId" name="departement"
+										class="form-control" placeholder="facultatif">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="text">Type
+									Organisation: </label>
+								<div class="col-sm-7">
+									<select class="form-control col-sm-3" id="typeOrg"
+										name="typeOrganisation">
+										<option>Très petite entreprise</option>
+										<option>Petite-moyenne entreprise</option>
+										<option>Entreprise de taille intermédiaire</option>
+										<option>Très grande entreprise</option>
+										<option>Ecole</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="number">Nombre
+									d'employés : </label>
+								<div class="col-sm-7">
+									<input type="number" id="nbreEmplId" name="nbEmploye"
+										class="form-control" placeholder="facultatif">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="text">Rue : </label>
+								<div class="col-sm-7">
+									<input type="text" id="rueId" name="rue" class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="number">N° :
+								</label>
+								<div class="col-sm-7">
+									<input type="number" id="numId" name="num" class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="text">Boîte :
+								</label>
+								<div class="col-sm-7">
+									<input type="text" id="boiteId" name="boite"
+										class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="text">Pays :
+								</label>
+								<div class="col-sm-7">
+									<select class="form-control col-sm-3" id="paysId" name="paysCh">
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="text">Region
+									: </label>
+								<div class="col-sm-7">
+									<input type="text" id="regionId" name="region"
+										class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="text">Code
+									Postal: </label>
+								<div class="col-sm-7">
+									<input type="text" id="cpId" name="cp" class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="text">Ville :
+								</label>
+								<div class="col-sm-7">
+									<input type="text" id="villeId" name="ville"
+										class="form-control">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="email">Email
+									: </label>
+								<div class="col-sm-7">
+									<input type="text" id="emailPartId" name="email"
+										class="form-control" placeholder="yourname@example.com">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3" for="text">Site
+									web:</label>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" name="siteWeb"
+										id="siteWebId" placeholder="https://example.com/users/">
+								</div>
+							</div>
+							<div class="form-group">
+
+								<label class="control-label col-sm-3" for="password">Téléphone:</label>
+								<div class="col-sm-7">
+									<input type="number" class="form-control" name="telephonne"
+										id="tel" maxlength="15" placeholder="+123456789123">
+								</div>
+							</div>
+							<div class="col-sm-offset-8">
+								<button type="submit" class="btn btn-default"
+									id="envoiInscrPartenaire">Valider</button>
+							</div>
+						</form>
+						<section class="notification"></section>
+					</div>
+				</div>
+
+				<div id="acceuilEtudiant">
+					<div id="mobilites">
+						<div id="page-wrapper" class="col-lg-10 md-10">
+							<div class="row">
+								<h3>Mobilités en cours</h3>
+								<!-- /.panel-heading -->
+								<div class="panel-body">
+									<div class="dataTable_wrapper">
+										<div class="row">
+											<div class="col-sm-12">
+												<table style="width: 100%;"
+													aria-describedby="dataTables-example_info" role="grid"
+													class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline"
+													id="tableDossiersEtudiant" width="100%">
+													<thead>
+														<tr role="row">
+															<th
+																aria-label="NumeroDossier: activate to sort column ascending"
+																style="width: 230px;" colspan="1" rowspan="1"
+																tabindex="0" class="sorting">Numéro de dossier</th>
+															<th
+																aria-label="Destination: activate to sort column ascending"
+																style="width: 230px;" colspan="1" rowspan="1"
+																tabindex="0" class="sorting">Destination</th>
+															<th
+																aria-label="Partenaire: activate to sort column ascending"
+																style="width: 230px;" colspan="1" rowspan="1"
+																tabindex="0" class="sorting">Partenaire</th>
+															<th
+																aria-label="DateDebut: activate to sort column ascending"
+																style="width: 230px;" colspan="1" rowspan="1"
+																tabindex="0" class="sorting">Date début</th>
+															<th
+																aria-label="DateFin: activate to sort column ascending"
+																style="width: 230px;" colspan="1" rowspan="1"
+																tabindex="0" class="sorting">Date fin</th>
+															<th aria-label="Type: activate to sort column ascending"
+																style="width: 230px;" colspan="1" rowspan="1"
+																tabindex="0" class="sorting">Type</th>
+															<th aria-label="Etat: activate to sort column ascending"
+																style="width: 230px;" colspan="1" rowspan="1"
+																tabindex="0" class="sorting">Etat</th>
+															<th aria-label="Documents:" style="width: 230px;"
+																colspan="1" rowspan="1" tabindex="0" class="sorting">Documents</th>
+														</tr>
+
+
+													</thead>
+
+													<tbody>
+
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+									<!-- /.table-responsive -->
+								</div>
+								<!-- /.panel-body -->
+								<button class="btn btn-default" id="supprimerMobiliteEtudiant">Annuler</button>
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+				<div id="suiviEtudiants">
+					<div id="page-wrapper" class="col-lg-10 md-10">
+						<div class="row">
+							<h3>Suivi des étudiants</h3>
+						</div>
+						<div class="row" id="tableauSuivi">
+							<div class="col-lg-12">
+								<div class="panel panel-default">
+									<div class="panel-heading">Suivi</div>
+									<!-- /.panel-heading -->
+									<div class="panel-body">
+										<div class="dataTable_wrapper">
+											<div
+												class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+												<div class="row">
+													<div class="col-sm-6">
+														<div class="dataTables_filter"
+															id="dataTables-example_filter"></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-12">
+														<table style="width: 100%;"
+															aria-describedby="dataTables-example_info" role="grid"
+															class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline"
+															id="tableSuivi" width="100%">
+															<thead>
+																<tr role="row">
+																	<th
+																		aria-label="Rendering engine: activate to sort column descending"
+																		aria-sort="ascending" style="width: 230px;"
+																		colspan="1" rowspan="1"
+																		aria-controls="dataTables-example" tabindex="0"
+																		class="sorting_asc">Nom</th>
+																	<th
+																		aria-label="Browser: activate to sort column ascending"
+																		style="width: 265px;" colspan="1" rowspan="1"
+																		aria-controls="dataTables-example" tabindex="0"
+																		class="sorting">Prenom</th>
+																	<th
+																		aria-label="Platform(s): activate to sort column ascending"
+																		style="width: 242px;" colspan="1" rowspan="1"
+																		aria-controls="dataTables-example" tabindex="0"
+																		class="sorting">Pseudo</th>
+
+																	<th
+																		aria-label="Platform(s): activate to sort column ascending"
+																		style="width: 242px;" colspan="1" rowspan="1"
+																		aria-controls="dataTables-example" tabindex="0"
+																		class="sorting">Partenaire</th>
+																	<th
+																		aria-label="Platform(s): activate to sort column ascending"
+																		style="width: 242px;" colspan="1" rowspan="1"
+																		aria-controls="dataTables-example" tabindex="0"
+																		class="sorting">Mobilité</th>
+																	<th
+																		aria-label="Platform(s): activate to sort column ascending"
+																		style="width: 242px;" colspan="1" rowspan="1"
+																		aria-controls="dataTables-example" tabindex="0"
+																		class="sorting" name="Document">Documents</th>
+																	<th
+																		aria-label="Platform(s): activate to sort column ascending"
+																		style="width: 242px;" colspan="1" rowspan="1"
+																		aria-controls="dataTables-example" tabindex="0"
+																		class="sorting" name="Document">Id</th>
+																</tr>
+															</thead>
+															<tbody></tbody>
+														</table>
+													</div>
+												</div>
+											</div>
+										</div>
+
+									</div>
+									<!-- /.panel-body -->
+								</div>
+								<!-- /.panel -->
+							</div>
+							<!-- /.col-lg-12 -->
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="Rechercher">
+				<div id="page-wrapper" class="col-lg-10 md-10">
+					<div class="row">
+						<h3 id="titreRecherche"></h3>
+					</div>
+					<div class="row" id="affichageUser">
+						<p>Nom :
+						<h4 class="nomUser"></h4>
+						<br /> Prenom :
+						<h4 class="prenomUser"></h4>
+						</br/> Pseudo :
+						<h4 class="pseudoUser"></h4>
+						<br />Section :
+						<h4 class="sectionUser"></h4>
+						<br /> </br/> Email:
+						<h4 class="emailUser"></h4>
+						<br />
+						</p>
+						<div class="row" id="pourProfesseur">
+							<div class="row col-lg-6">
+								<label>type Compte <select class="form-control input-sm"
+									id="typeCompteSelect">
+										<option value="Etudiant" selected="selected">Etudiant</option>
+										<option value="Professeur">Professeur</option>
+								</select></label>
+							</div>
+							<div class="col-lg-5">
+								<button class="btn btn-default" id="changerTypeCompte">Changer
+									type de compte</button>
+							</div>
+						</div>
+						<div class="col-lg-5">
+							<button class="btn btn-default" id="revenirRechercheUser">precedent</button>
+						</div>
+					</div>
+					<div class="row" id="affichagePartenaire">
+						<h4 class="idPartenaire"></h4>
+						<p>Nom Legal:
+						<h4 class="nomPartenaire"></h4>
+						<br /> Ville
+						<h4 class="villePartenaire"></h4>
+						</br/> Pays:
+						<h4 class="paysPartenaire"></h4>
+						<br />Type Organisation:
+						<h4 class="typePartenaire"></h4>
+						<br /> </br/> Email:
+						<h4 class="emailPartenaire"></h4>
+						<br />
+						</p>
+						<div class="col-lg-5">
+							<button class="btn btn-default" id="revenirRecherchePartenaire">precedent</button>
+						</div>
+						<div id="pourProfesseurPartenaire">
+							<div class="col-lg-5">
+								<button class="btn btn-default" id="supprimerPartenaire">supprimer</button>
+							</div>
+						</div>
+					</div>
+					<div class="row" id="tableauRecherche">
+						<div class="col-lg-12">
+							<div class="panel panel-default">
+								<div class="panel-heading">Resultats de recherches</div>
+								<!-- /.panel-heading -->
+								<div class="panel-body">
+									<div class="dataTable_wrapper">
+										<div
+											class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+											<div class="row">
+												<div class="col-sm-6">
+													<div id="dataTables-example_length"
+														class="dataTables_length">
+														<label>type Recherche <select
+															class="form-control input-sm"
+															aria-controls="dataTables-example" id="sel"
+															name="selectRecherche">
+																<option value="Étudiants" selected="selected">Étudiants</option>
+																<option value="Mobilités">Mobilités</option>
+																<option value="Partenaires">Partenaires</option>
+														</select> entries
+														</label>
+													</div>
+												</div>
+												<div class="col-sm-6">
+													<div class="dataTables_filter"
+														id="dataTables-example_filter"></div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-12">
+													<table style="width: 100%;"
+														aria-describedby="dataTables-example_info" role="grid"
+														class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline"
+														id="tableRecherche" width="100%">
+														<thead>
+															<tr role="row">
+																<th
+																	aria-label="Rendering engine: activate to sort column descending"
+																	aria-sort="ascending" style="width: 230px;" colspan="1"
+																	rowspan="1" aria-controls="dataTables-example"
+																	tabindex="0" class="sorting_asc">Nom</th>
+																<th
+																	aria-label="Browser: activate to sort column ascending"
+																	style="width: 265px;" colspan="1" rowspan="1"
+																	aria-controls="dataTables-example" tabindex="0"
+																	class="sorting">Prenom</th>
+																<th
+																	aria-label="Platform(s): activate to sort column ascending"
+																	style="width: 242px;" colspan="1" rowspan="1"
+																	aria-controls="dataTables-example" tabindex="0"
+																	class="sorting">Section</th>
+																<th
+																	aria-label="Platform(s): activate to sort column ascending"
+																	style="width: 242px;" colspan="1" rowspan="1"
+																	aria-controls="dataTables-example" tabindex="0"
+																	class="sorting" name="partenaire">Nom legal</th>
+																<th
+																	aria-label="Platform(s): activate to sort column ascending"
+																	style="width: 242px;" colspan="1" rowspan="1"
+																	aria-controls="dataTables-example" tabindex="0"
+																	class="sorting" name="partenaire">Ville</th>
+																<th
+																	aria-label="Platform(s): activate to sort column ascending"
+																	style="width: 242px;" colspan="1" rowspan="1"
+																	aria-controls="dataTables-example" tabindex="0"
+																	class="sorting" name="partenaire">Pays</th>
+																<th
+																	aria-label="Platform(s): activate to sort column ascending"
+																	style="width: 242px;" colspan="1" rowspan="1"
+																	aria-controls="dataTables-example" tabindex="0"
+																	class="sorting">Etudiant</th>
+																<th
+																	aria-label="Platform(s): activate to sort column ascending"
+																	style="width: 242px;" colspan="1" rowspan="1"
+																	aria-controls="dataTables-example" tabindex="0"
+																	class="sorting">Partenaire</th>
+																<th
+																	aria-label="Platform(s): activate to sort column ascending"
+																	style="width: 242px;" colspan="1" rowspan="1"
+																	aria-controls="dataTables-example" tabindex="0"
+																	class="sorting">Type</th>
+																<th
+																	aria-label="Platform(s): activate to sort column ascending"
+																	style="width: 242px;" colspan="1" rowspan="1"
+																	aria-controls="dataTables-example" tabindex="0"
+																	class="sorting">Periode</th>
+															</tr>
+														</thead>
+														<tbody></tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+								<!-- /.panel-body -->
+							</div>
+							<!-- /.panel -->
+						</div>
+						<!-- /.col-lg-12 -->
+					</div>
+					<section class="notification"></section>
+				</div>
+			</div>
+
+			<div id="divDemandes">
+				<div id="page-wrapper" class="col-lg-10 md-10">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4>Listing des demandes introduites</h4>
+								</div>
+								<!-- /.panel-heading -->
+								<div class="panel-body">
+									<div class="dataTable_wrapper">
+										<div class="row">
+											<div class="col-sm-12">
+												<table style="width: 100%;"
+													aria-describedby="dataTables-example_info" role="grid"
+													class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline"
+													id="tableListing" width="100%">
+													<thead>
+														<tr role="row">
+															<th
+																aria-label="NumeroDemande: activate to sort column descending"
+																style="width: 230px;" colspan="1" rowspan="1"
+																tabindex="0" class="sorting_asc">Numéro Demande</th>
+															<th aria-label="Nom: activate to sort column ascending"
+																style="width: 230px;" colspan="1" rowspan="1"
+																tabindex="0" class="sorting">Nom</th>
+															<th
+																aria-label="Prenom: activate to sort column ascending"
+																style="width: 230px;" colspan="1" rowspan="1"
+																tabindex="0" class="sorting">Prénom</th>
+															<th
+																aria-label="Section: activate to sort column ascending"
+																style="width: 230px;" colspan="1" rowspan="1"
+																tabindex="0" class="sorting">Section</th>
+															<th
+																aria-label="Partenaire: activate to sort column ascending"
+																style="width: 230px;" colspan="1" rowspan="1"
+																tabindex="0" class="sorting">Partenaire</th>
+															<th aria-label="Annee: activate to sort column ascending"
+																style="width: 230px;" colspan="1" rowspan="1"
+																tabindex="0" class="sorting">Année</th>
+															<th
+																aria-label="Periode: activate to sort column ascending"
+																style="width: 230px;" colspan="1" rowspan="1"
+																tabindex="0" class="sorting">Période</th>
+															<th aria-label="Type: activate to sort column descending"
+																style="width: 230px;" colspan="1" rowspan="1"
+																tabindex="0" class="sorting_asc">Type</th>
+														</tr>
+														</th>
+														</tr>
+													</thead>
+													<tbody>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+									<!-- /.table-responsive -->
+								</div>
+								<!-- /.panel-body -->
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-lg-6">
+							<button class="btn btn-default" id="supprimerDemande">Supprimer</button>
+						</div>
+						<div class="col-lg-offset-1">
+							<button class="btn btn-default" id="confirmerDemande">Valider</button>
+						</div>
+					</div>
+
+				</div>
+				<section class="notification"></section>
+			</div>
+
+			<div id="divDemandesEtudiant">
+				<div id="page-wrapper" class="col-lg-10 md-10">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4>Listing des demandes</h4>
+								</div>
+								<!-- /.panel-heading -->
+								<div class="panel-body">
+									<div class="dataTable_wrapper">
+										<div class="row">
+											<div class="col-sm-12">
+												<table style="width: 100%;"
+													aria-describedby="dataTables-example_info" role="grid"
+													class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline"
+													id="tableDemandesEtudiant" width="100%">
+													<thead>
+														<tr role="row">
+															<th aria-label="Nom: activate to sort column ascending"
+																style="width: 230px;" colspan="1" rowspan="1"
+																tabindex="0" class="sorting">Id demande</th>
+															<th aria-label="Nom: activate to sort column ascending"
+																style="width: 230px;" colspan="1" rowspan="1"
+																tabindex="0" class="sorting">Ordre préférence</th>
+															<th aria-label="Nom: activate to sort column ascending"
+																style="width: 230px;" colspan="1" rowspan="1"
+																tabindex="0" class="sorting">Type</th>
+															<th aria-label="Nom: activate to sort column ascending"
+																style="width: 230px;" colspan="1" rowspan="1"
+																tabindex="0" class="sorting">Partenaire</th>
+															<th aria-label="Nom: activate to sort column ascending"
+																style="width: 230px;" colspan="1" rowspan="1"
+																tabindex="0" class="sorting">Période</th>
+															<th aria-label="Annee: activate to sort column ascending"
+																style="width: 230px;" colspan="1" rowspan="1"
+																tabindex="0" class="sorting">Année académique</th>
+														</tr>
+													</thead>
+													<tbody>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+									<!-- /.table-responsive -->
+								</div>
+								<!-- /.panel-body -->
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<button class="btn btn-default" id="annulerDemandeEtudiant">Annuler</button>
+							<button class="btn btn-default" id="valideDemandeEtudiant"
+								style="display: none">Valider</button>
+						</div>
+					</div>
+
+
+				</div>
+				<section class="notification"></section>
+			</div>
+
+
+			<div id="divPaiements">
+				<div id="page-wrapper" class="col-lg-10 md-10">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4>Listing des paiements</h4>
+								</div>
+								<!-- /.panel-heading -->
+								<div class="panel-body">
+									<div class="dataTable_wrapper">
+										<div class="row">
+											<div class="col-sm-12">
+												<table style="width: 100%;"
+													aria-describedby="dataTables-example_info" role="grid"
+													class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline"
+													id="tablePaiments" width="100%">
+													<thead>
+														<tr role="row">
+															<th aria-label="Nom: activate to sort column ascending"
+																style="width: 230px;" colspan="1" rowspan="1"
+																tabindex="0" class="sorting">Section</th>
+															<th aria-label="Nom: activate to sort column ascending"
+																style="width: 230px;" colspan="1" rowspan="1"
+																tabindex="0" class="sorting">Nom</th>
+															<th aria-label="Nom: activate to sort column ascending"
+																style="width: 230px;" colspan="1" rowspan="1"
+																tabindex="0" class="sorting">Prénom</th>
+															<th aria-label="Nom: activate to sort column ascending"
+																style="width: 230px;" colspan="1" rowspan="1"
+																tabindex="0" class="sorting">Partenaire</th>
+															<th
+																aria-label="DateDebut: activate to sort column ascending"
+																style="width: 230px;" colspan="1" rowspan="1"
+																tabindex="0" class="sorting">paiement demandé</th>
+														</tr>
+													</thead>
+													<tbody>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+									<!-- /.table-responsive -->
+								</div>
+								<!-- /.panel-body -->
+							</div>
+						</div>
+					</div>
+
+
+
+				</div>
+				<section class="notification"></section>
+			</div>
+
+			<div id="affichageMobilite">
+
+				<div id="page-wrapper" class="col-lg-10 md-10">
+					<div class="row">
+						<h3>Mobilité</h3>
+						<p>Nom de l'étudiant :
+						<h4 class="nomEtudiant"></h4>
+						<br /> Prénom de l'étudiant :
+						<h4 class="prenomEtudiant"></h4>
+						<br /> Pseudo de l'étudiant :
+						<h4 class="pseudoEtudiant"></h4>
+						<br /> Partenaire :
+						<h4 class="partenaireMobilite"></h4>
+						<br /> Mobilité :
+						<h4 class="typeMobilite"></h4>
+						<h4 id='idMobilite'></h4>
+						</p>
+					</div>
+					<div class="row" id="tableauMobilite">
+						<div class="col-lg-6">
+							<div class="panel panel-default">
+								<div class="panel-body">
+									<div class="table-responsive">
+										<table class="table">
+											<thead>
+												<tr>
+													<th>Étape de la mobilité</th>
+													<th>Sélection</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr class="success">
+													<td>Confirmer Signatures de départ</td>
+													<td><input type="checkbox" name="EN_PREPARATION" /></td>
+												</tr>
+												<tr class="info">
+													<td>Demande de paiement envoyée</td>
+													<td><input type="checkbox" name="A_PAYER" /></td>
+												</tr>
+												<tr class="warning">
+													<td>Données encodées dans le logiciel</td>
+													<td><input type="checkbox" name="donneesEncodees" /></td>
+												</tr>
+												<tr class="danger">
+													<td>Reception des documents de retour</td>
+													<td><input type="checkbox" name="documentsRetours" /></td>
+												</tr>
+												<tr class="success">
+													<td>Seconde demande de paiement envoyée</td>
+													<td><input type="checkbox" name="SOLDE" /></td>
+												</tr>
+												<tr class="info">
+													<td>Paiement effectué</td>
+													<td><input type="checkbox" name="PAYEE" /></td>
+												</tr>
+											</tbody>
+										</table>
+										</form>
+									</div>
+									<!-- /.table-responsive -->
+								</div>
+								<!-- /.panel-body -->
+							</div>
+							<!-- /.panel -->
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<button class="btn btn-default" id="precedent">Précédent</button>
+						</div>
+						<div class="col-md-6">
+							<button class="btn btn-default" id="validerModific">Valider</button>
+						</div>
+					</div>
+				</div>
+			</div>
+	</div>
+
+
+
+	<script type="text/javascript" src="javascript/jquery.js"></script>
+	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script type="text/javascript"
+		src="javascript/jquery.dataTables.min.js"></script>
+
+	<script
+		src="Webcontent/bootstrap/bower_components/datatables-responsive/js/dataTables.responsive.js"></script>
+	<script
+		src="bootstrap/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script
+		src="bootstrap/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+	<script type="text/javascript"
+		src="javascript/jquery.dataTables.min.js"></script>
+	<script
+		src="bootstrap/bower_components/datatables-responsive/js/dataTables.responsive.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdn.datatables.net/buttons/1.1.2/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript"
+		src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.flash.min.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.html5.min.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.print.min.js"></script>
+
+	<script type="text/javascript" src="javascript/index.js"></script>
+
+	<script type="text/javascript" src="javascript/jquery-ui.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

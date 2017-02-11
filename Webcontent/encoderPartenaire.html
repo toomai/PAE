@@ -1,0 +1,43 @@
+<! doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="style.css" />
+<title>Inscription</title>
+</head>
+<body>
+	<header> </header>
+	<div id="menu"></div>
+	<div id="divContent">
+		<h2>Encoder Partenaire</h2>
+		<form method="post">
+			<label>Nom légal : </label><input type="text" id="nomId" name="nom" /><br />
+			<label>Nom d'affaires : </label><input type="text"
+				id="nomDaffairesId" name="nomDaffaires" /><br /> <label>Nom
+				complet : </label><input type="text" id="nomCompletId" name="nomComplet" /><br />
+			<label>Département : </label><input type="email" id="departementId"
+				name="departement" placeholder="facultatif" /><br /> <label>Type
+				d'entreprise : </label> <select name="section" id="sectionId">
+				<option value="TPE">TPE</option>
+				<option value="PME">PME</option>
+				<option value="ETI">ETI</option>
+				<option value="TGE">TGE</option>
+			</select><br /> <label>Nombre d'employés : </label><input type="number"
+				name="nbEmployés" min="10" /><br /> <label>Adresse : </label><input
+				type="text" id="adresseID" name="adresse" /><br /> <label>Pays
+				: </label><input type="text" id="PaysID" name="pays" /><br /> <label>Région
+				: </label><input type="text" id="regionID" name="region"
+				placeholder="facultatif" /><br /> <label>Code postal : </label><input
+				type="text" id="cpID" name="cp" /><br /> <label>Ville: </label><input
+				type="text" id="villeID" name="ville" /><br /> <label>E-mail
+				: </label><input type="email" id="emailID" name="email" /><br /> <label>Site
+				web : </label><input type="text" id="webID" name="web"
+				placeholder="facultatif" /><br /> <label>Télephone : </label><input
+				type="tel" id="telID" name="tel" /><br /> <input type="submit"
+				value="valider" id="validation" />
+		</form>
+	</div>
+	<script type="text/javascript" src="javascript/jquery.js"></script>
+	<script type="text/javascript" src="javascript/script.js"></script>
+</body>
+</html>

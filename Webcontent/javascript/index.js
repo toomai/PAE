@@ -1,0 +1,1475 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////Variables//////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+var id = "encoderEtudiant";
+var table_recherche = $('#tableRecherche').DataTable({
+	"bPaginate" : false,
+	"bLengthChange" : false,
+	"bInfo" : false,
+	"bAutoWidth" : false,
+	"columnDefs" : [ {
+		"targets" : [ 3, 4, 5, 6, 7, 8, 9 ],
+		"visible" : false
+	} ],
+
+	dom : 'Bfrtip',
+	buttons : [ 'csv' ]
+
+});
+
+var table_dossiers_etudiant = $("#tableDossiersEtudiant").DataTable({
+	"bPaginate" : false,
+	"bLengthChange" : false,
+	"bInfo" : false,
+	"bAutoWidth" : false,
+	dom : 'Bfrtip',
+	buttons : [ 'csv' ]
+});
+
+var table_demandes = $('#tableListing').DataTable({
+	"bPaginate" : false,
+	"bLengthChange" : false,
+	"bInfo" : false,
+	"bAutoWidth" : false,
+	dom : 'Bfrtip',
+	buttons : [ 'csv' ]
+});
+var table_paiements = $('#tablePaiments').DataTable({
+	"bPaginate" : false,
+	"bLengthChange" : false,
+	"bInfo" : false,
+	"bAutoWidth" : false,
+	dom : 'Bfrtip',
+	buttons : [ 'csv' ]
+});
+var table_suivi = $('#tableSuivi').DataTable({
+	"bPaginate" : false,
+	"bLengthChange" : false,
+	"bInfo" : false,
+	"bAutoWidth" : false,
+	"columnDefs" : [ {
+		"targets" : [ 6 ],
+		"visible" : false,
+		"searchable" : false
+	} ]
+});
+var table_demandes_etudiant = $('#tableDemandesEtudiant').DataTable({
+	"bPaginate" : false,
+	"bLengthChange" : false,
+	"bInfo" : false,
+	"bAutoWidth" : false
+});
+
+var table_partanaire = $('#tablePartenaires').DataTable({
+	"bPaginate" : false,
+	"bLengthChange" : false,
+	"bInfo" : false,
+	"bAutoWidth" : false
+});
+
+var typeCompte = 0;
+var statut = "";
+$(function() {
+	// /////////////////////////////////////////////////////////////////////////////////////////////////
+	// //////////////////////////////////Test
+	// connection////////////////////////////////////////////////
+	// /////////////////////////////////////////////////////////////////////////////////////////////////
+	$(document).ready(function() {
+		var input = document.createElement("input");
+		input.setAttribute("type", "date");
+		if (input.type !== $("input[type=date]")) {
+			$('input[type=date]').datepicker({
+				dateFormat : "yy-mm-dd",
+				changeYear : true,
+				changeMonth : true,
+				minDate : new Date(1975, 1, 1),
+				yearRange : "1975:2025"
+			});
+		}
+		var req = $.ajax({
+			url : "/app",
+			type : "POST",
+			data : "requete=testConnect",
+			success : function(reponse) {
+				statut = reponse;
+			},
+			error : function(jqXHR, textStatus, errorThrown) {
+				window.location.replace("..");
+			}
+		});
+		$.when(req).done(function() {
+			createAnnee();
+			if (statut === "ETUDIANT") {
+				$("#menuProfesseur").hide();
+				$("#menuEtudiant").show();
+				chargerEtudiant();
+			} else {
+				typeCompte = 1;
+				$("#menuProfesseur").show();
+				$("#menuEtudiant").hide();
+				htmlProf();
+				$.ajax({
+					url : '/app',
+					type : 'POST',
+					data : 'requete=listerEtudiant',
+					success : function(reponse) {
+						reponse = JSON.parse(reponse);
+						listerEtudiants("etudiantById", reponse);
+						listerEtudiants("studById", reponse)
+					},
+					error : function(e) {
+						// en cas
+						// d'erreur
+						console.log(e.message);
+					}
+				});
+			}
+			return false;
+		});
+	});
+
+	function listerEtudiants(id, reponse) {
+		$('#' + id)
+				.html(
+						"<option value=\"newEtu\" id=\"newEtudiantOption\">Sélectionnez l'étudiant</option>");
+		for (var i = 0; i < reponse.length; i++) {
+			var etudiant = reponse[i];
+			var op = $("<option value =" + etudiant.pseudo + ">");
+			op.text(etudiant.pseudo);
+			$('#' + id).append(op);
+		}
+	}
+
+	function htmlProf() {
+		var pseudos2 = "<div class=\"form-group\">"
+				+ "<label class=\"control-label col-sm-3\" for=\"text\">Etudiant:"
+				+ "</label>"
+				+ "<div class=\"col-sm-4\">"
+				+ "<select class=\"form-control col-sm-3\" id=\"studById\""
+				+ "name=\"nomStud\">"
+				+ "<option value=\"newPart\" id=\"newStudOption\">Etudiant</option>"
+				+ "</select>" + "</div>" + "</div>"
+		$("#formEtudiant div:first-child").before(pseudos2);
+
+		var pseudos = "<div class=\"form-group\">"
+				+ "<label class=\"control-label col-sm-3\" for=\"text\">Etudiant:"
+				+ "</label>"
+				+ "<div class=\"col-sm-7\">"
+				+ "<select class=\"form-control col-sm-3\" id=\"etudiantById\""
+				+ "name=\"nomEtudiant\">"
+				+ "<option value=\"newPart\" id=\"newEtudiantOption\">Etudiant</option>"
+				+ "</select>" + "</div>" + "</div>"
+		$("#formDemandeMobilite div:first-child").after(pseudos);
+	}
+
+	function chargerEtudiant() {
+		$.ajax({
+			url : '/app',
+			type : 'POST',
+			data : 'requete=chargerEtudiant',
+			success : function(reponse) {
+				reponse = JSON.parse(reponse);
+				$("#nomId").val(reponse.nom);
+				$("#nomId").prop('disabled', true);
+				$("#prenomId").val(reponse.prenom);
+				$("#prenomId").prop('disabled', true);
+				$("#emaileId").val(reponse.email);
+				$("#nbrAnneeSuperieurId").val(reponse.nbrAnneeSuperieur);
+				$("#numCompteId").val(reponse.numCompte);
+				$("#bicId").val(reponse.bic);
+				$("#titulaireId").val(reponse.titulaire);
+				$("#natId").val(reponse.nationalite);
+				if (reponse.adresse != null) {
+					$("#rueeId").val(reponse.adresse.rue);
+					$("#numeId").val(reponse.adresse.numero);
+					$("#boiteeId").val(reponse.adresse.boite);
+					$("#regioneId").val(reponse.adresse.region);
+					$("#cpeId").val(reponse.adresse.cp);
+					$("#villeeId").val(reponse.adresse.ville);
+				}
+				if (reponse.dateNaissance != null) {
+					var day = reponse.dateNaissance.dayOfMonth;
+					var month = reponse.dateNaissance.monthValue;
+					var year = reponse.dateNaissance.year;
+					$("#dateId").val(year + "-" + month + "-" + day);
+				}
+			},
+			error : function(e) {
+				// en cas
+				// d'erreur
+				console.log(e.message);
+			}
+		});
+	}
+
+	$(".notification").html("");
+	$('#encoderPartenaire').hide();
+	$('#soumettreDemande').hide();
+	$('#encoderEtudiant').show();
+	$('#Rechercher').hide();
+	$('#acceuilEtudiant').hide();
+	$('#divDemandes').hide();
+	$('#suiviEtudiants').hide();
+	$('#divPaiements').hide();
+	$('#affichageMobilite').hide();
+	$('#divDemandesEtudiant').hide();
+	$('#listePartenaires').hide();
+	// /////////////////////////////////////////////////////////////////////////////////////////////////
+	// //////////////////////////////////encoder menu
+	// //////////////////////////////////////////////////
+	// /////////////////////////////////////////////////////////////////////////////////////////////////
+
+	$('a.listerPartenaires').on('click', function() {
+		$('#' + id).hide();
+		id = "listePartenaires";
+		$('title').html('Liste Partenaires');
+		chargerPartenaires();
+		$('#listePartenaires').show();
+		return false;
+	});
+
+	function chargerPartenaires() {
+		$.ajax({
+			url : '/app',
+			type : 'POST',
+			data : 'requete=listerPartenaire',
+			success : function(reponse) {
+				var data = JSON.parse(reponse);
+				console.log(data);
+				table_partanaire.clear();
+				for (key in data) {
+					var partenaire = data[key];
+					table_partanaire.row
+							.add(
+									[ partenaire.id, partenaire.nomLegal,
+											partenaire.adresse.ville,
+											partenaire.adresse.pays,
+											partenaire.ajoutParEleve,
+											partenaire.dispo ]).draw(false);
+				}
+			},
+			error : function(jqXHR, textStatus, errorThrown) {
+				$(".notification").html(
+						"<p>Une erreur est survenue: " + errorThrown + "<p>");
+			}
+		});
+	}
+
+	$('a.encoderInformations').on('click', function etudiant() {
+		$(".notification").html("");
+		$('#' + id).hide();
+		$('#affichageMobilite').hide();
+		$('#encoderEtudiant').show();
+		id = "encoderEtudiant";
+		$('title').html('Encoder Etudiant');
+	});
+	function confirmation(data) {
+		$('#modalSelectionDate').modal('show');
+
+		$('#confirmationMobilite').on(
+				'click',
+				function() {
+					var dateDep = $('#dateDepartConfirm').val();
+					var dateRet = $('#dateRetourConfirm').val();
+					if (dateDep == "" || dateDep == null) {
+						alert("Remplissez la date départ.");
+						return;
+					} else if (dateRet == "" || dateRet == null) {
+						alert("Remplisser la date de retour");
+						return;
+					} else {
+						$('#modalSelectionDate').modal('hide');
+						$.ajax({
+							url : '/app',
+							type : 'POST',
+							data : 'requete=confirmerDemande&idDemande='
+									+ JSON.stringify(data[0]) + '&dateDep='
+									+ dateDep + '&dateRet=' + dateRet,
+							success : function(reponse) {
+								$(".notification").html(
+										"<p> Votre mobilité est confirmée<p>");
+							},
+							error : function(jqXHR, textStatus, errorThrown) {
+								$(".notification").html(
+										"<p>Une erreur est survenue: "
+												+ errorThrown + "<p>");
+							}
+						});
+					}
+					return false;
+				});
+		return false;
+
+	}
+	$('a.afficherDemandes').on(
+			'click',
+			function() {
+				$(".notification").html("");
+				$('#' + id).hide();
+				$('#affichageMobilite').hide();
+				$('#divDemandesEtudiant').show();
+				id = 'divDemandesEtudiant';
+				$('title').html('listing demandes');
+				$.ajax({
+					url : '/app',
+					type : 'POST',
+					data : 'requete=listerDemandeByEtudiant',
+					success : function(response) {
+						table_demandes_etudiant.clear().draw();
+						var t = JSON.parse(response);
+						for (var i = 0; i < t.length; i++) {
+
+							table_demandes_etudiant.row
+									.add(
+
+											[ t[i].id_demande,
+													t[i].ordrePreference,
+													t[i].typeMobilite,
+													t[i].partenaire.nomComplet,
+													t[i].periode,
+													t[i].anneeAcademique ])
+									.draw(false);
+
+						}
+						;
+					},
+					error : function(e) {
+
+					}
+				});
+
+			});
+
+	$('a.listerPaiements').on(
+			'click',
+			function() {
+				$(".notification").html("");
+				$('#' + id).hide();
+				$('#affichageMobilite').hide();
+				$('#divPaiements').show();
+				id = "divPaiements";
+				$('title').html('listing paiements');
+				$.ajax({
+					url : '/app',
+					type : 'POST',
+					data : 'requete=listerPaiements',
+					success : function(response) {
+						table_paiements.clear();
+						var t = JSON.parse(response);
+						for (var i = 0; i < t.length; i++) {
+							var paiement = "";
+							if (t[i].etat === 'A_PAYER') {
+								paiement = 'premier paiement demandé';
+							} else {
+								paiement = 'paiement soldé demandé';
+							}
+							table_paiements.row
+									.add(
+											[ t[i].etudiant.section,
+													t[i].etudiant.nom,
+													t[i].etudiant.prenom,
+													t[i].partenaire.nomLegal,
+													paiement ]).draw(false);
+						}
+						;
+					},
+					error : function(e) {
+
+					}
+				});
+			});
+
+	$('a.encoderInfosPart').on(
+			'click',
+			function partenaire() {
+				$(".notification").html("");
+				$('#' + id).hide();
+				$('#affichageMobilite').hide();
+				id = 'encoderPartenaire';
+				$('#encoderPartenaire').show();
+				$('title').html('Encoder Partenaire');
+				autoCompletion();
+				if ($('#paysId').has('option').length === 0) {
+					$.ajax({
+						url : '/app',
+						type : 'POST',
+						data : 'requete=getPays',
+						success : function(reponse) {
+							var t = JSON.parse(reponse);
+							for (var i = 0; i < t.length; i++) {
+								$('#paysId').append(
+										'<option value=' + t[i].nom + '>'
+												+ t[i].nom + '</option>');
+							}
+						},
+						error : function(jqXHR, textStatus, errorThrown) {
+							$(".notification").html(
+									"<p>Une erreur est survenue: "
+											+ errorThrown + "<p>");
+						}
+					});
+				}
+			});
+
+	function arrayToString(t) {
+		var cibles = [];
+		for (var i = 0; i < t.length; i++) {
+			cibles[i] = t[i].nomLegal;
+		}
+		return cibles;
+	}
+
+	function autoCompletion() {
+		$.ajax({
+			url : '/app',
+			type : 'POST',
+			data : 'requete=autoCompletion',
+			success : function(response) {
+				var t = JSON.parse(response);
+				var stringarray = arrayToString(t);
+				$('#nomLegId').autocomplete({
+					source : stringarray,
+					select : function(event, ui) {
+						for (var i = 0; i < t.length; i++) {
+							if (t[i].nomLegal === ui.item.value) {
+								modalChoix(t[i]);
+							}
+						}
+					},
+					minLength : 3
+				});
+			},
+			error : function(e) {
+			}
+		});
+	}
+	;
+
+	function modalChoix(t) {
+		$('h4.nomPartenaire').text(
+				t.nomLegal + ", " + t.adresse.ville + "," + t.adresse.pays);
+		$('#modalRehabiliterPartenaire').modal('show');
+		$('#confirmerRehabilitation').on('click', function() {
+			$.ajax({
+				url : '/app',
+				type : 'POST',
+				data : 'requete=rehabiliterPartenaire&idPart=' + t.id,
+				success : function(e) {
+					alert('partenaire réajouté');
+					$('#modalRehabiliterPartenaire').modal('hide');
+				},
+				error : function(e) {
+					alert(e);
+				}
+			});
+		});
+	}
+
+	$('a.afficherMobilite').on(
+			'click',
+			function() {
+				$(".notification").html("");
+				$("#acceuilEtudiant").show();
+				$("#" + id).hide();
+
+				$('#affichageMobilite').hide();
+				id = "acceuilEtudiant";
+				table_dossiers_etudiant.clear().draw();
+				$('title').html("Acceuil Etudiant");
+				$.ajax({
+					url : '/app',
+					type : 'POST',
+					data : "requete=getDossiersEtudiant",
+					success : function(reponse) {
+						json = JSON.parse(reponse);
+						console.log(json);
+						for ( var key in json) {
+
+							var cibles = documentsFalse(json[key]);
+							var mobilite = json[key].mobilite;
+							var partenaire = mobilite.partenaire;
+							var dateDebut = mobilite.dateDebut.dayOfMonth + "/"
+									+ mobilite.dateDebut.monthValue + "/"
+									+ mobilite.dateDebut.year;
+							var dateFin = mobilite.dateFin.dayOfMonth + "/"
+									+ mobilite.dateFin.monthValue + "/"
+									+ mobilite.dateFin.year;
+							table_dossiers_etudiant.row
+									.add(
+											[ mobilite.id,
+													partenaire.adresse.ville,
+													partenaire.nomComplet,
+													dateDebut, dateFin,
+													mobilite.type,
+													formatEtat(mobilite.etat),
+													cibles ]).draw(false);
+						}
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+						$(".notification").html(
+								"<p>Une erreur est survenue: " + errorThrown
+										+ "<p>");
+					}
+				})
+				return false;
+			});
+
+	$('a.encoderDemande')
+			.on(
+					'click',
+					function demande() {
+						$(".notification").html("");
+						$
+								.ajax({
+									url : '/app', // depend de la servlet
+									type : 'POST',
+									data : 'requete=getPartenairesDipo',
+									success : function(reponse) {
+										reponse = JSON.parse(reponse);
+										$('#partenaireById')
+												.html(
+														"<option value=\"newPart\" id=\"newPartenaireOption\">Nouveau partenaire ?</option>");
+										for (var i = 0; i < reponse.length; i++) {
+											var partenaire = reponse[i].nomLegal;
+											var op = $("<option value ="
+													+ partenaire + ">");
+											op.text(partenaire);
+											$('#partenaireById').append(op);
+										}
+										$('#newPartenaireOption').on(
+												'click',
+												function() {
+													$("a.encoderInfosPart")
+															.trigger('click');
+												});
+
+									},
+									error : function(e) {
+										// en cas d'erreur
+										console.log(e.message);
+									}
+								});
+						$(".notification").html("");
+						$('#soumettreDemande').show();
+						$('#affichageMobilite').hide();
+						$('#' + id).hide();
+						id = 'soumettreDemande';
+
+						$('title').html('Encoder Demande');
+					});
+
+	$('a.suiviEtudiant').on(
+			'click',
+			function() {
+				$(".notification").html("");
+				$("#suiviEtudiants").show();
+				$('#affichageMobilite').hide();
+				$('#tableauSuivi').show();
+				$("#" + id).hide();
+				id = "suiviEtudiants";
+				$('title').html("suivi des étudiants");
+				$.ajax({
+					url : '/app',
+					type : 'post',
+					data : 'requete=getSuivi',
+					success : function(response) {
+						table_suivi.clear();
+						var t = JSON.parse(response);
+						for (var i = 0; i < t.length; i++) {
+							var cibles = documentsAttendus(t[i]);
+							table_suivi.row.add(
+									[
+											t[i].mobilite.etudiant.nom,
+											t[i].mobilite.etudiant.prenom,
+											t[i].mobilite.etudiant.pseudo,
+											t[i].mobilite.partenaire.nomLegal,
+											[ t[i].mobilite.type,
+													t[i].mobilite.periode,
+													t[i].mobilite.etat ],
+											cibles, t[i].mobilite.id ]).draw(
+									false);
+
+						}
+						;
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+						$(".notification").html(
+								"<p>Une erreur est survenue: " + errorThrown
+										+ "<p>");
+					}
+				});
+			});
+	function documentsAttendus(t) {
+		if (!t.contratBourse) {
+			return 'documents de départ attendus';
+		} else if (t.contratBourse && !t.rapportFinal) {
+			return 'document de retour attendus';
+		} else {
+			return 'tous les documents ont été remplis';
+		}
+	}
+	;
+
+	/*
+	 * $('#sectionDemandes').on('click', function { var typeListing;
+	 * $('#formDemandes').find('select').each(function(i, value) { typeListing =
+	 * $(value).val(); }); if(typeListing !== 'ALL'){ $.ajax({ url : '/app',
+	 * type : 'post', data :
+	 * 'requete=listerDemandeParSection&section='+typeListing, success :
+	 * function(response){ remplirTableauDemandes(response); }, error :
+	 * function(jqXHR, textStatus, errorThrown) { $(".notification").html( "<p>Une
+	 * erreur est survenue: " + errorThrown + "<p>"); } }); } };
+	 */
+
+	$('a.listerDemandes').on(
+			'click',
+			function() {
+				$(".notification").html("");
+				$('#divDemandes').show();
+				$('#' + id).hide();
+				$('#affichageMobilite').hide();
+				id = 'divDemandes';
+				$('title').html('Listing demandes');
+				$.ajax({
+					url : '/app',
+					type : 'post',
+					data : 'requete=listerDemandes',
+					success : function(response) {
+						var t = JSON.parse(response);
+						table_demandes.clear().draw();
+						for (var i = 0; i < t.length; i++) {
+							var part;
+							if(t[i].partenaire == null){
+								part = 'X';
+							}else{
+								part = t[i].partenaire.nomLegal;
+							}
+							table_demandes.row.add(
+									[ t[i].id_demande, t[i].etudiant.nom,
+											t[i].etudiant.prenom,
+											t[i].etudiant.section,
+											part,
+											t[i].anneeAcademique, t[i].type,
+											t[i].periode ]).draw(false);
+						}
+						;
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+						$(".notification").html(
+								"<p>Une erreur est survenue: " + errorThrown
+										+ "<p>");
+					}
+				});
+			});
+
+	$("#supprimerPartenaire").on(
+			'click',
+			function() {
+				var data = table_partanaire.row('.selected').data();
+				$.ajax({
+					url : '/app',
+					type : 'POST',
+					data : 'requete=supprimerPartenaire&idPart='
+							+ JSON.stringify(data[0]),
+					success : function(reponse) {
+						chargerPartenaires();
+						console.log(reponse);
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+						$(".notification").html(
+								"<p>Une erreur est survenue: " + errorThrown
+										+ "<p>");
+					}
+				})
+			});
+
+	$('#annulerDemandeEtudiant').on(
+			'click',
+			function() {
+				$(".notification").html("");
+				var index = table_demandes.row('.selected').index();
+				var id = table_demandes_etudiant.cell(index, 0).data();
+				$.ajax({
+					url : '/app',
+					type : 'post',
+					data : 'requete=supprimerDemande&id=' + id,
+					success : function(response) {
+						table_demandes.row('.selected').remove().draw(false);
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+						$(".notification").html(
+								"<p>Une erreur est survenue: " + errorThrown
+										+ "<p>");
+					}
+				});
+			});
+
+	$('#tableListing tbody').on('click', 'tr', function() {
+		if ($(this).hasClass('selected')) {
+			$(this).removeClass('selected');
+		} else {
+			table_demandes.$('tr.selected').removeClass('selected');
+			$(this).addClass('selected');
+		}
+		return false;
+	});
+
+	$('#supprimerDemande').on(
+			'click',
+			function() {
+				var index = table_demandes.row('.selected').index();
+				var id = table_demandes.cell(index, 0).data();
+
+				$.ajax({
+					url : '/app',
+					type : 'post',
+					data : 'requete=supprimerDemande&id=' + id,
+					success : function(response) {
+						table_demandes.row('.selected').remove().draw(false);
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+						$(".notification").html(
+								"<p>Une erreur est survenue: " + errorThrown
+										+ "<p>");
+					}
+				});
+			});
+
+	$('a.deconnection').on(
+			'click',
+			function() {
+				$.ajax({
+					url : '/app',
+					type : 'post',
+					data : 'requete=deconnection',
+					success : function(response) {
+						window.location.replace("..");
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+						$(".notification").html(
+								"<p>Une erreur est survenue: " + errorThrown
+										+ "<p>");
+					}
+				});
+			});
+
+	$('a.effectuerRecherche')
+			.on(
+					'click',
+					function demande() {
+						$(".notification").html("");
+						$('#' + id).hide();
+						$('#Rechercher').show();
+						$('#affichagePartenaire').hide();
+						$('#affichageMobilite').hide();
+						$('#affichageUser').hide();
+						table_recherche.clear();
+						$('#tableauRecherche').show();
+						$('#titreRecherche')
+								.html(
+										"Veuillez sélectionner un critère de recherche avant d'effectuer celle-ci");
+						id = 'Rechercher';
+						changerTableau($('#sel').val());
+						$('#affichageUser').hide();
+						$('title').html('Effectuer Recherche');
+					});
+
+	$('#envoiEtud').on(
+			'click',
+			function() {
+				$(".notification").html("");
+				var t = [ "nomId", "prenomId", "natId", "emaileId",
+						"numCompteId", "bicId", "rueeId", "numeId", "boiteeId",
+						"regioneId", "cpeId", "villeeId" ];
+				var champVide = checkIfEmpty(t);
+				if (!champVide) {
+					var json = formToJson($("#formEtudiant"));
+					alert('in');
+					$.ajax({
+						url : "/app",
+						type : "POST",
+						data : "requete=encodEtudiant&form="
+								+ JSON.stringify(json) + "&date="
+								+ $('#dateId').val() + "&etud="
+								+ $("#studById option:selected") + "&rue="
+								+ $("#rueeId").val() + "&num="
+								+ $("#numeId").val() + "&boite="
+								+ $("#boiteeId").val() + "&region="
+								+ $("#regioneId").val() + "&codepostal="
+								+ $("#cpeId").val() + "&ville="
+								+ $("#villeeId").val() + "&nbr="
+								+ $("#nbrAnneeSuperieurId").val(),
+						success : function() {
+							alert("L'étudiant a été encodé avec succes");
+						},
+						error : function(jqXHR, textStatus, errorThrown) {
+							$(".notification").html(
+									"<p>Une erreur est survenue: "
+											+ errorThrown + "<p>");
+						}
+					});
+				} else {
+					$(".notification").html(
+							"<p>Veuillez remplir tous les champs</p>");
+				}
+				;
+
+				return false;
+			});
+
+	$('#send_demande')
+			.on(
+					'click',
+					function() {
+						$(".notification").html("");
+						var t = [ "typeMobId", "prioriteId" ];
+						var champVide = checkIfEmpty(t);
+						var newPart = $('#partenaireById').val();
+						if (!champVide) {
+							var json = formToJson($("#formDemandeMobilite"));
+							$
+									.ajax({
+										url : "/app",
+										type : "POST",
+										data : "requete=encodDemande&form="
+												+ JSON.stringify(json)
+												+ "&part="
+												+ $(
+														"#partenaireById option:selected")
+														.text()
+												+ "&etud="
+												+ $(
+														"#etudiantById option:selected")
+														.text(),
+										success : function() {
+											$(".notification")
+													.html(
+															"<p>La demande a été encodée avec succes<p>");
+										},
+										error : function(jqXHR, textStatus,
+												errorThrown) {
+											$(".notification").html(
+													"<p>Une erreur est survenue: "
+															+ errorThrown
+															+ "<p>");
+										}
+									});
+						} else {
+							$(".notification").html(
+									"<p>Veuillez remplir tous les champs</p>");
+						}
+						;
+
+						return false;
+					});
+	function proposerPartenaire(data) {
+		$("#modalPropositionPart").modal('show');
+		$("#nomLegTestPart").append(data.nomLegal);
+		$("#departTestPart").append(data.departement);
+		$("#typeTestPart").append(data.typeOrganisation);
+		$("#villeTestPart").append(data.adresse.ville);
+		$("#paysTestPart").append(data.adresse.pays);
+
+		$("#confirmationTestPartenaire").on('click', function() {
+			return rehabiliterPartenaire(data.id);
+		});
+		$("#retourEncodPartConfirm").on('click', function() {
+			return false;
+		})
+	}
+
+	$("#rehabiliterPartenaire").on('click', function() {
+		var data = table_partanaire.row('.selected').data();
+		rehabiliterPartenaire(data[0]);
+	})
+
+	function rehabiliterPartenaire(data) {
+		$
+				.ajax({
+					url : "/app",
+					type : "POST",
+					data : "requete=rehabiliterPartenaire&idPart="
+							+ JSON.stringify(data),
+					sucess : function(reponse) {
+						$(".notification").html(
+								"<p>Le partenaire a été rehabilité<p>");
+						return true;
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+						$(".notification").html(
+								"<p>Une erreur est survenue: " + errorThrown
+										+ "<p>");
+						return false;
+					}
+				});
+	}
+	$('#envoiInscrPartenaire')
+			.on(
+					"click",
+					function() {
+						$(".notification").html("");
+						var t = [ "nomLegId", "nomCompId", "emailPartId",
+								"siteWebId", "tel" ];
+						var champVide = checkIfEmpty(t);
+						if (!champVide) {
+							var json = formToJson($("#formPartenaire"));
+
+							$
+									.ajax({
+										url : "/app",
+										type : "POST",
+										data : "requete=encodPartenaire&form="
+												+ JSON.stringify(json)
+												+ "&rue=" + $("#rueId").val()
+												+ "&num=" + $("#numId").val()
+												+ "&boite="
+												+ $("#boiteId").val()
+												+ "&pays=" + $("#paysId").val()
+												+ "&region="
+												+ $("#regionId").val()
+												+ "&codepostal="
+												+ $("#cpId").val() + "&ville="
+												+ $("#villeId").val() + "&tel="
+												+ $("#tel").val(),
+										success : function() {
+											$(".notification")
+													.html(
+															"<p>Le partenaire a été encodé avec succes<p>");
+										},
+										error : function(jqXHR, textStatus,
+												errorThrown) {
+											$(".notification").html(
+													"<p>Une erreur est survenue: "
+															+ errorThrown
+															+ "<p>");
+										}
+									});
+
+						} else {
+							$(".notification").html(
+									"<p>Veuillez remplir tous les champs</p>");
+						}
+						;
+						return false;
+					});
+
+	function documentsTrues(t) {
+		var cibles = [];
+		var cles = Object.keys(t);
+		for (var i = 0; i < cles.length; i++) {
+			var valeur = cles[i];
+			if (t[valeur]) {
+				cibles.push(valeur);
+			}
+		}
+		return cibles;
+	}
+	function documentsFalse(t) {
+		var cibles = "";
+		var cles = Object.keys(t);
+		for (var i = 0; i < cles.length; i++) {
+			var valeur = cles[i];
+			if (typeof t[valeur] === 'boolean' && !t[valeur]) {
+				cibles += formatDocument(valeur);
+				cibles += "<br/>";
+			}
+		}
+		return cibles;
+	}
+	function formatDocument(doc) {
+		var toRet = "";
+		var tab = doc.split(/(?=[A-Z])/);
+		for ( var i in tab) {
+			var mot = tab[i];
+			if (i == 0) {
+				toRet = mot.charAt(0).toUpperCase() + mot.slice(1) + " ";
+			} else {
+				toRet += mot + " ";
+			}
+		}
+		return toRet;
+	}
+
+	function formatEtat(type) {
+		var toRet = "";
+		var tab = type.split("_");
+		toRet = tab[0].charAt(0).toUpperCase() + tab[0].slice(1) + " ";
+		for ( var i in tab) {
+			var mot = tab[i]
+			if (i == 0) {
+				toRet = mot.charAt(0).toUpperCase()
+						+ mot.slice(1).toLowerCase() + " ";
+			} else {
+				toRet += mot.toLowerCase() + " ";
+			}
+		}
+		return toRet;
+	}
+	function remplirTableau() {
+		var typeRecherche = $('#sel').val();
+		$.ajax({
+			url : "/app",
+			type : "POST",
+			data : "requete=rechercher&typeRecherche=" + typeRecherche,
+			success : function(response) {
+				var t = JSON.parse(response);
+				if (typeRecherche === 'Étudiants') {
+
+					for (var i = 0; i < t.length; i++) {
+						table_recherche.row.add(
+								[ t[i].nom, t[i].prenom, t[i].section,
+										t[i].email, t[i].pseudo, '0', '0', '0',
+										'0', '0' ]).draw(false);
+					}
+					;
+				}
+				;
+				if (typeRecherche === 'Partenaires') {
+					for (var i = 0; i < t.length; i++) {
+						table_recherche.row.add(
+								[ '0', '0', t[i].id, t[i].nomLegal,
+										t[i].adresse.ville, t[i].adresse.pays,
+										t[i].typeOrganisation, t[i].email, '0',
+										'0' ]).draw(false);
+					}
+					;
+				}
+				;
+				if (typeRecherche === "Mobilités") {
+					for (var i = 0; i < t.length; i++) {
+						table_recherche.row.add(
+								[ '0', '0', '0', t[i].id, t[i].etudiant.nom,
+										t[i].etudiant.prenom,
+										t[i].etudiant.pseudo,
+										t[i].partenaire.nomLegal, t[i].type,
+										t[i].periode ]).draw(false);
+					}
+					;
+				}
+				;
+
+			},
+			error : function(jqXHR, textStatus, errorThrown) {
+				$('#notification').html('<p>Erreur : ' + errorThrown + '</p>');
+			}
+		});
+	}
+	;
+	function JSONToForm(formulaire, texte) {
+		var cles = Object.keys(texte);
+		for (var i = 0; i < cles.length; i++) {
+			var valeur = cles[i];
+			var item = $(formulaire).find('[name=' + valeur + ']');
+
+			if (item[0].type === 'checkbox' && $(item)[0]) {
+				$(item).prop('checked', 'true');
+				continue;
+			} else if ($(item)[0].type === 'radio') {
+				$("input[name=" + valeur + "][value=" + texte[valeur] + "]")
+						.prop("checked", true);
+				continue;
+			}
+			$(item).val(texte[valeur]);
+		}
+
+	}
+
+	function menuCompte() {
+		if (typeCompte === 1) {
+			$('#menuEtudiant').hide();
+			$('#menuProfesseur').show();
+		}
+	}
+
+	function formToJson(form) {
+		var data = {};
+
+		form.find('input').each(function(i, value) {
+			data[$(value).attr('name')] = $(value).val();
+		});
+
+		form
+				.find('select')
+				.each(
+						function(i, value) {
+							if ($(value).attr('name') == "typeOrganisation") {
+								if ($(value).val() == "Très petite entreprise") {
+									data[$(value).attr('name')] = "TPE";
+								} else if ($(value).val() == "Petite-moyenne entreprise") {
+									data[$(value).attr('name')] = "PME";
+								} else if ($(value).val() == "Entreprise de taille intermédiaire") {
+									data[$(value).attr('name')] = "ETI";
+								} else if ($(value).val() == "Très grande entreprise") {
+									data[$(value).attr('name')] = "TGE";
+								} else {
+									data[$(value).attr('name')] = "ECOLE";
+								}
+							} else {
+								data[$(value).attr('name')] = $(value).val();
+							}
+						});
+
+		form.find('input[type=radio]:checked').each(function(i, value) {
+			data[$(value).attr('name')] = $(value).val();
+		});
+		return data;
+	}
+	;
+
+	function createAnnee() {
+		var annee = 2016;
+		$('#anneeId')
+				.html(
+						"<option value=\"AnneeOpt\" id=\"AnneeOpt\">Sélectionnez l'année</option>");
+		for (var i = annee; i < 2100; i++) {
+			var op = $("<option value =" + i + ">");
+			op.text(i);
+			$('#anneeId').append(op);
+		}
+	}
+
+	function changerTableau(type) {
+		if (type === 'Partenaires') {
+			table_recherche.destroy();
+			table_recherche = $('#tableRecherche').DataTable({
+				"bLengthChange" : false,
+				"bInfo" : false,
+				"bAutoWidth" : false,
+				"columnDefs" : [ {
+					"targets" : [ 0, 1, 2, 6, 7, 8, 9 ],
+					"visible" : false
+				}, {
+					"targets" : [ 3, 4, 5 ],
+					"visible" : true
+				} ]
+			});
+		} else if (type === 'Étudiants') {
+			table_recherche.destroy();
+			table_recherche = $('#tableRecherche').DataTable({
+				"bLengthChange" : false,
+				"bInfo" : false,
+				"bAutoWidth" : false,
+				"columnDefs" : [ {
+					"targets" : [ 3, 4, 5, 6, 7, 8, 9 ],
+					"visible" : false
+				}, {
+					"targets" : [ 0, 1, 2 ],
+					"visible" : true
+				} ],
+				dom : 'Bfrtip',
+				buttons : [ {
+					extend : 'csvHtml5',
+					exportOptions : {
+						columns : ':visible'
+					}
+				} ]
+			});
+		} else {
+			table_recherche.destroy();
+			table_recherche = $('#tableRecherche').DataTable({
+				"bLengthChange" : false,
+				"bInfo" : false,
+				"bAutoWidth" : false,
+				"columnDefs" : [ {
+					"targets" : [ 0, 1, 2, 3, 4, 5 ],
+					"visible" : false
+				}, {
+					"targets" : [ 6, 7, 8, 9 ],
+					"visible" : true
+				} ]
+			});
+		}
+		;
+		remplirTableau();
+	}
+
+	$('#sel').on('change', function() {
+		table_recherche.clear().draw();
+		changerTableau($(this).val());
+	});
+
+	$('#tableRecherche').on('click', 'tr', function() {
+		var data = table_recherche.row(this).data();
+		var type = $('#sel').val();
+		if (type === 'Étudiants') {
+			$('#tableauRecherche').hide();
+			$('#titreRecherche').html("Affichage User");
+			$('#affichageUser').show();
+			$('h4.nomUser').text(data[0]);
+			$('h4.prenomUser').text(data[1]);
+			$('h4.pseudoUser').text(data[4]);
+			$('h4.sectionUser').text(data[2]);
+			$('h4.emailUser').text(data[3]);
+			if (typeCompte === 0) {
+				$('#pourProfesseur').hide();
+			}
+			;
+		}
+		if (type === 'Mobilités') {
+			$('#Rechercher').hide();
+			$('#affichageMobilite').show();
+			$('#tableauMobilite').hide();
+			$('#validerModific').hide();
+			$('h4.nomEtudiant').text(data[4]);
+			$('h4.prenomEtudiant').text(data[5]);
+			$('h4.pseudoEtudiant').text(data[6]);
+			$('h4.partenaireMobilite').text(data[7]);
+			$('h4.typeMobilite').text(data[8] + ',' + data[9]);
+			$('#idMobilite').text(data[3]);
+			$('#idMobilite').hide();
+		}
+		;
+		if (type === 'Partenaires') {
+			$('#tableauRecherche').hide();
+			$('#affichagePartenaire').show();
+			$('#titreRecherche').html('Affichage Partenaire');
+			$('h4.idPartenaire').hide();
+			$('h4.idPartenaire').text(data[2]);
+			$('h4.nomPartenaire').text(data[3]);
+			$('h4.villePartenaire').text(data[4]);
+			$('h4.paysPartenaire').text(data[5]);
+			$('h4.typePartenaire').text(data[6]);
+			$('h4.emailPartenaire').text(data[7]);
+			if (typeCompte === 0) {
+				$('#pourProfesseurPartenaire').hide();
+			}
+			;
+		}
+		;
+
+	});
+
+	$('#changerTypeCompte').on(
+			'click',
+			function() {
+				var typeCompte = $('#typeCompteSelect').val();
+				var pseudo = $('h4.pseudoUser').text();
+				$.ajax({
+					url : '/app',
+					type : 'POST',
+					data : 'requete=changerTypeCompte&type=' + typeCompte
+							+ '&pseudo=' + pseudo + '',
+					success : function(reponse) {
+						alert('type de compte changé avec succès');
+					},
+					error : function(e) {
+						alert('erreur dans le changement de compte');
+					}
+				});
+			});
+
+	$('#revenirRechercheUser')
+			.on(
+					'click',
+					function() {
+						$('#affichageUser').hide();
+						$('#tableauRecherche').show();
+						$('#titreRecherche')
+								.html(
+										"Veuillez sélectionner un critère de recherche avant d'effectuer celle-ci");
+					});
+
+	$('#revenirRecherchePartenaire')
+			.on(
+					'click',
+					function() {
+						$('#affichagePartenaire').hide();
+						$('#tableauRecherche').show();
+						$('#titreRecherche')
+								.html(
+										"Veuillez sélectionner un critère de recherche avant d'effectuer celle-ci");
+					});
+
+	$('#tableSuivi').on('click', 'td', function() {
+		var data = table_suivi.row(this).data();
+		$('#suiviEtudiants').hide();
+		$('#affichageMobilite').show();
+		$('#tableauMobilite').show();
+		$('#validerModific').show();
+		$('h4.nomEtudiant').text(data[0]);
+		$('h4.prenomEtudiant').text(data[1]);
+		$('h4.pseudoEtudiant').text(data[2]);
+		$('h4.partenaireMobilite').text(data[3]);
+		$('h4.typeMobilite').text(data[4]);
+		$('#idMobilite').text(data[6]);
+		$('#idMobilite').hide();
+	});
+
+	$('#precedent').on('click', function() {
+		$('#affichageMobilite').hide();
+		$('#' + id).show();
+	});
+
+	$('#validerModific')
+			.on(
+					'click',
+					function() {
+						var cibles = [];
+						var id = $('#idMobilite').text();
+						var i = 0;
+						$('input[type=checkbox]:checked').each(function(i, el) {
+
+							cibles[i] = $(el).attr('name');
+							i++;
+						});
+						$
+								.ajax({
+									url : '/app',
+									type : 'POST',
+									data : 'requete=changeEtatMobilite&donnees='
+											+ JSON.stringify(cibles)
+											+ '&id='
+											+ id,
+									success : function(e) {
+										alert(e);
+										$('#affichageMobilite').hide();
+										$('#suiviEtudiants').show();
+									},
+									error : function(e) {
+										alert("Erreur, des étapes de la mobilité sont sautées");
+									}
+								});
+					});
+
+	$('#tableDossiersEtudiant').on('click', 'tr', function() {
+		if ($(this).hasClass('selected')) {
+			$(this).removeClass('selected');
+		} else {
+			table_dossiers_etudiant.$('tr.selected').removeClass('selected');
+			$(this).addClass('selected');
+		}
+	});
+	$('#tableListing').on('click', 'tr', function() {
+		if ($(this).hasClass('selected')) {
+			$(this).removeClass('selected');
+		} else {
+			table_demandes.$('tr.selected').removeClass('selected');
+			$(this).addClass('selected');
+		}
+	});
+
+	$('#tablePartenaires').on('click', 'tr', function() {
+		if ($(this).hasClass('selected')) {
+			$(this).removeClass('selected');
+		} else {
+			table_partanaire.$('tr.selected').removeClass('selected');
+			$(this).addClass('selected');
+		}
+	});
+
+	$('#tableDemandesEtudiant')
+			.on(
+					'click',
+					'tr',
+					function() {
+						if ($(this).hasClass('selected')) {
+							$(this).removeClass('selected');
+						} else {
+							table_demandes_etudiant.$('tr.selected')
+									.removeClass('selected');
+							$(this).addClass('selected');
+						}
+
+						var datab = table_demandes_etudiant.row('.selected')
+								.data();
+						var partenaire = datab[3];
+						var req = $
+								.ajax({
+									url : '/app',
+									type : 'POST',
+									data : {
+										requete : "testPartenaireEtudiant",
+										data : JSON.stringify(partenaire),
+
+									},
+									success : function(reponse) {
+
+										if (reponse == "true") {
+											document
+													.getElementById('valideDemandeEtudiant').style.display = 'block';
+										} else {
+											document
+													.getElementById('valideDemandeEtudiant').style.display = 'none';
+
+										}
+
+									},
+									error : function(e) {
+									}
+								});
+						$.when(req).done(function() {
+							$('#valideDemandeEtudiant').on('click', function() {
+								confirmation(datab)
+							})
+						});
+
+					});
+
+	$('#supprimerMobiliteEtudiant').click(
+			function() {
+				var data = table_dossiers_etudiant.row('.selected').data();
+
+				if (data[6] == "Annule") {
+					return;
+				}
+				var idMobilite = data[0];
+
+				$.ajax({
+					url : '/app',
+					type : 'POST',
+					data : 'requete=getAnnulation',
+					success : function(reponse) {
+						var t = JSON.parse(reponse);
+						for (var i = 0; i < t.length; i++) {
+							$('#listingAnnulation').append(
+									'<option value=' + t[i].raison + '>'
+											+ t[i].raison + '</option>');
+						}
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+						$(".notification").html(
+								"<p>Une erreur est survenue: " + errorThrown
+										+ "<p>");
+					}
+				});
+				$('#modalAnnulation').modal('show');
+				$('#confirmationAnnulation').click(function() {
+					var motifAnnulation = formToJson($('#motifAnnulation'));
+
+					$.ajax({
+						url : '/app',
+						type : 'POST',
+						data : {
+							requete : "annulerMobilite",
+							mobilite : JSON.stringify(idMobilite),
+							newRaison : motifAnnulation.newRaison,
+							oldRaison : motifAnnulation.oldRaison
+						},
+						success : function(reponse) {
+							// si suppression, ici
+						},
+						error : function(e) {
+							console.log(e.message);
+						}
+					});
+				});
+			});
+	function checkIfEmpty(t) {
+		var champVide = false;
+		for (var i = 0; i < t.length; i++) {
+			if (!$("#" + t[i]).val()) {
+				champVide = true;
+				document.getElementById(t[i]).style.borderColor = "#FF0000";
+			}
+		}
+		return champVide;
+	}
+	/*
+	 * Ca va foirer, on sait... TODO
+	 */
+	$('#confirmerDemande').on('click', function() {
+		confirmation(table_demandes.row('.selected').data());
+	});
+
+});

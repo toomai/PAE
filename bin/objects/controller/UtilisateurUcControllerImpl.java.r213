@@ -1,0 +1,122 @@
+package objects.controller;
+
+import dal.DalServices;
+import dao.interfaces.DemandeDao;
+import dao.interfaces.UtilisateurDao;
+import objects.interfaces.BizzFactory;
+import objects.interfaces.DemandeDto;
+import objects.interfaces.UtilisateurDto;
+import objects.model.Authentification;
+import objects.model.BizzFactoryImpl;
+
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import java.sql.SQLException;
+import java.util.ConcurrentModificationException;
+
+public class UtilisateurUcControllerImpl implements UtilisateurUcController {
+  private BizzFactory factory = new BizzFactoryImpl();
+  private UtilisateurDao utilisateurDao;
+  private DalServices dalServices;
+  private DemandeDao demandeDao;
+
+  public UtilisateurUcControllerImpl(UtilisateurDao utilisateurDao, DemandeDao demandeDao,
+      DalServices dalServices) {
+    this.utilisateurDao = utilisateurDao;
+    this.demandeDao = demandeDao;
+    this.dalServices = dalServices;
+  }
+
+  /*
+   * static { try { Constructor c1 =
+   * Class.forName("dal.UtilisateurDAOImpl").getDeclaredConstructor(); c1.setAccessible(true);
+   * utilisateurDao = (UtilisateurDAO) c1.newInstance(); Constructor c2 =
+   * Class.forName("dal.DALServicesImpl").getDeclaredConstructor(); c2.setAccessible(true);
+   * dalServices = (DALServices) c2.newInstance(); } catch (Throwable e) { throw new
+   * RuntimeException(); } }
+   */
+  /**
+   * authentifie un UtilisateurDto.
+   */
+
+  public UtilisateurDto authentifie(UtilisateurDto utilFrontEnd) {
+    UtilisateurDto ret = factory.getUtilisateurDto();
+
+    ret.setPseudo(utilFrontEnd.getPseudo());
+    try {
+      ret = utilisateurDao.select(ret);
+      dalServices.commit();
+      if (Authentification.validerMdp(utilFrontEnd.getMdp(), ret.getMdp())) {
+        return ret;
+      }
+      return null;
+    } catch (InvalidKeySpecException exc) {
+      exc.printStackTrace();
+    } catch (NoSuchAlgorithmException exc) {
+      exc.printStackTrace();
+    } catch (SQLException exc) {
+      exc.printStackTrace();
+      dalServices.rollBack();
+    }
+    return null;
+  }
+
+  /**
+   * identifie un Utilisateur dans la DB.
+   */
+
+  public UtilisateurDto identifie(UtilisateurDto utilisateur) {
+    try {
+      UtilisateurDto utilARet;
+      if ((utilARet = utilisateurDao.select(utilisateur)) != null) {
+        return utilARet;
+      }
+      String mdp = Authentification.genererMdp(utilisateur.getMdp());
+      utilisateur.setMdp(mdp);
+      if (utilisateurDao.insert(utilisateur)) {
+        utilisateur.setNumVersion(0);
+      }
+      dalServices.commit();
+      return utilisateur;
+    } catch (SQLException exc) {
+      System.out.println(exc.getMessage());
+      dalServices.rollBack();
+    } catch (NoSuchAlgorithmException exc) {
+      // TODO Auto-generated catch block
+      exc.printStackTrace();
+    } catch (InvalidKeySpecException exc) {
+      // TODO Auto-generated catch block
+      exc.printStackTrace();
+    }
+    return null;
+  }
+
+  @Override
+  public boolean encoderEtudiant(UtilisateurDto demandeur, UtilisateurDto utilisateur) {
+	  try {
+      boolean ret = utilisateurDao.update(demandeur, utilisateur);
+      dalServices.commit();
+      return ret;
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+      dalServices.rollBack();
+    } catch (ConcurrentModificationException e) {
+      System.out.println(e.getMessage());
+      dalServices.rollBack();
+    }
+    return false;
+  }
+
+  @Override
+  public boolean encoderDemande(DemandeDto demande) {
+    try {
+      this.demandeDao.insert(demande);
+      return true;
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+      dalServices.rollBack();
+      return false;
+    }
+  }
+
+}

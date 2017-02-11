@@ -1,0 +1,91 @@
+ERROR | 2016-04-23 14:51:19 | [qtp1384010761-30] dal.DalServicesImpl (DalServicesImpl.java:102) - erreur getConn null
+ERROR | 2016-04-23 15:06:01 | [qtp1384010761-35] dal.DalServicesImpl (DalServicesImpl.java:102) - erreur getConn null
+ERROR | 2016-04-23 15:06:21 | [qtp1384010761-27] dal.DalServicesImpl (DalServicesImpl.java:102) - erreur getConn null
+ERROR | 2016-04-23 15:06:46 | [qtp1384010761-27] dal.DalServicesImpl (DalServicesImpl.java:102) - erreur getConn null
+ERROR | 2016-04-23 15:07:58 | [qtp1384010761-36] dal.DalServicesImpl (DalServicesImpl.java:102) - erreur getConn null
+ERROR | 2016-04-23 15:08:05 | [qtp1384010761-29] dal.DalServicesImpl (DalServicesImpl.java:102) - erreur getConn null
+ERROR | 2016-04-23 15:08:14 | [qtp1384010761-34] dal.DalServicesImpl (DalServicesImpl.java:102) - erreur getConn null
+FATAL | 2016-04-23 15:20:34 | [main] projet.Main (Main.java:69) - Main qui ne démarre pas: Address already in use: bind
+FATAL | 2016-04-23 15:20:41 | [main] projet.Main (Main.java:69) - Main qui ne démarre pas: Address already in use: bind
+FATAL | 2016-04-23 16:11:54 | [main] model.BizzFactoryImpl (BizzFactoryImpl.java:101) - Crash introspection objects.controller.models.DemandeUcControllerImpl.<init>(dal.DalServices, dao.interfaces.DemandeDao, dao.interfaces.PartenaireDao)
+FATAL | 2016-04-23 16:12:32 | [main] model.BizzFactoryImpl (BizzFactoryImpl.java:101) - Crash introspection objects.controller.models.DemandeUcControllerImpl.<init>(dal.DalServices, dao.interfaces.DemandeDao, dao.interfaces.PartenaireDao)
+FATAL | 2016-04-23 16:13:43 | [main] model.BizzFactoryImpl (BizzFactoryImpl.java:101) - Crash introspection objects.controller.models.DemandeUcControllerImpl.<init>(dal.DalServices, dao.interfaces.DemandeDao, dao.interfaces.PartenaireDao)
+FATAL | 2016-04-23 16:16:11 | [main] model.BizzFactoryImpl (BizzFactoryImpl.java:101) - Crash introspection objects.controller.models.DemandeUcControllerImpl.<init>(dal.DalServices, dao.interfaces.DemandeDao, dao.interfaces.PartenaireDao)
+FATAL | 2016-04-23 16:16:59 | [main] model.BizzFactoryImpl (BizzFactoryImpl.java:101) - Crash introspection objects.controller.models.DemandeUcControllerImpl.<init>(dal.DalServices, dao.interfaces.DemandeDao, dao.interfaces.PartenaireDao)
+FATAL | 2016-04-23 16:20:06 | [main] model.BizzFactoryImpl (BizzFactoryImpl.java:102) - Crash introspection objects.controller.models.DemandeUcControllerImpl.<init>(dal.DalServices, dao.interfaces.DemandeDao, dao.interfaces.PartenaireDao)
+ERROR | 2016-04-23 20:32:23 | [qtp1384010761-29] dal.DalServicesImpl (DalServicesImpl.java:102) - erreur getConn null
+ERROR | 2016-04-23 20:32:36 | [qtp1384010761-29] dal.DalServicesImpl (DalServicesImpl.java:102) - erreur getConn null
+ERROR | 2016-04-23 20:32:37 | [qtp1384010761-15] dal.DalServicesImpl (DalServicesImpl.java:102) - erreur getConn null
+ERROR | 2016-04-23 20:32:53 | [qtp1384010761-17] dal.DalServicesImpl (DalServicesImpl.java:102) - erreur getConn null
+FATAL | 2016-04-24 17:59:13 | [main] model.BizzFactoryImpl (BizzFactoryImpl.java:102) - Crash introspection argument type mismatch
+FATAL | 2016-04-24 18:06:10 | [main] model.BizzFactoryImpl (BizzFactoryImpl.java:111) - Crash introspection null
+FATAL | 2016-04-24 18:10:59 | [main] model.BizzFactoryImpl (BizzFactoryImpl.java:112) - Crash introspection null
+ERROR | 2016-04-24 18:20:36 | [qtp1384010761-15] dal.DalServicesImpl (DalServicesImpl.java:102) - erreur getConn null
+ERROR | 2016-04-24 18:20:36 | [qtp1384010761-33] dal.DalServicesImpl (DalServicesImpl.java:102) - erreur getConn null
+ERROR | 2016-04-24 18:21:38 | [qtp1384010761-34] dal.DalServicesImpl (DalServicesImpl.java:102) - erreur getConn null
+ERROR | 2016-04-24 18:21:41 | [qtp1384010761-22] dal.DalServicesImpl (DalServicesImpl.java:102) - erreur getConn null
+ERROR | 2016-04-24 18:21:41 | [qtp1384010761-16] dal.DalServicesImpl (DalServicesImpl.java:102) - erreur getConn null
+ERROR | 2016-04-24 18:36:18 | [qtp1384010761-22] dal.DalServicesImpl (DalServicesImpl.java:102) - erreur getConn null
+FATAL | 2016-04-24 22:40:37 | [main] projet.Main (Main.java:69) - Main qui ne démarre pas: Address already in use: bind
+FATAL | 2016-04-24 22:40:45 | [main] projet.Main (Main.java:69) - Main qui ne démarre pas: Address already in use: bind
+FATAL | 2016-04-24 22:43:59 | [main] model.BizzFactoryImpl (BizzFactoryImpl.java:112) - Crash introspection objects.controller.models.DossierUcControllerImpl.<init>(dal.DalServices, dao.interfaces.DossierDao, dao.interfaces.UtilisateurDao, dao.interfaces.MobiliteDao)
+ERROR | 2016-04-25 08:58:50 | [qtp2147046752-19] dal.DalServicesImpl (DalServicesImpl.java:102) - erreur getConn null
+ERROR | 2016-04-25 11:06:13 | [qtp26786185-18] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 14:17:18 | [main] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 14:17:34 | [main] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 14:17:55 | [main] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 14:18:15 | [main] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 14:19:33 | [main] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 15:02:00 | [qtp26786185-18] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 15:02:02 | [qtp26786185-13] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 15:02:26 | [qtp26786185-25] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 15:03:20 | [qtp26786185-13] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 15:13:10 | [qtp26786185-12] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 15:13:10 | [qtp26786185-24] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 15:13:12 | [qtp26786185-13] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 15:13:14 | [qtp26786185-25] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 15:13:16 | [qtp26786185-24] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 15:13:17 | [qtp26786185-12] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 15:13:41 | [qtp26786185-24] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 15:13:42 | [qtp26786185-12] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 15:14:14 | [qtp26786185-17] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 15:14:14 | [qtp26786185-18] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 15:14:16 | [qtp26786185-15] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 15:14:16 | [qtp26786185-23] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 15:14:17 | [qtp26786185-25] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 15:14:17 | [qtp26786185-26] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 15:14:17 | [qtp26786185-17] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 15:14:18 | [qtp26786185-18] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 15:14:19 | [qtp26786185-16] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 15:14:22 | [qtp26786185-13] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 15:14:22 | [qtp26786185-17] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 15:14:23 | [qtp26786185-18] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 15:14:23 | [qtp26786185-24] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 15:14:23 | [qtp26786185-19] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 15:14:23 | [qtp26786185-15] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 15:14:24 | [qtp26786185-16] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 15:14:24 | [qtp26786185-23] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 15:14:25 | [qtp26786185-26] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 15:14:25 | [qtp26786185-17] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 15:14:26 | [qtp26786185-19] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 15:14:26 | [qtp26786185-18] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 15:14:27 | [qtp26786185-15] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 15:14:28 | [qtp26786185-25] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 15:14:28 | [qtp26786185-16] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 15:14:32 | [qtp26786185-26] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-25 15:14:32 | [qtp26786185-24] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+FATAL | 2016-04-26 11:54:08 | [main] projet.Main (Main.java:69) - Main qui ne démarre pas: Address already in use: bind
+ERROR | 2016-04-26 11:57:33 | [qtp2147046752-24] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-26 11:57:42 | [qtp2147046752-16] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-26 11:57:56 | [qtp2147046752-20] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-26 11:58:00 | [qtp2147046752-21] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-26 13:40:11 | [qtp2147046752-14] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-26 13:40:32 | [qtp2147046752-15] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+ERROR | 2016-04-26 13:41:30 | [qtp2147046752-16] dal.DalServicesImpl (DalServicesImpl.java:107) - erreur getConn null
+FATAL | 2016-04-29 08:24:47 | [main] projet.Main (Main.java:68) - Main qui ne démarre pas: Address already in use: bind
+FATAL | 2016-04-29 08:25:00 | [main] projet.Main (Main.java:68) - Main qui ne démarre pas: Address already in use: bind
+FATAL | 2016-04-29 08:25:34 | [main] projet.Main (Main.java:68) - Main qui ne démarre pas: Address already in use: bind
+FATAL | 2016-04-29 08:28:38 | [main] projet.Main (Main.java:68) - Main qui ne démarre pas: Address already in use: bind
+FATAL | 2016-04-29 08:28:38 | [main] projet.Main (Main.java:68) - Main qui ne démarre pas: Address already in use: bind
+ERROR | 2016-04-29 10:06:14 | [main] model.BizzFactoryImpl (BizzFactoryImpl.java:171) - Erreur introspection : null
+ERROR | 2016-04-29 10:06:52 | [main] model.BizzFactoryImpl (BizzFactoryImpl.java:171) - Erreur introspection : null

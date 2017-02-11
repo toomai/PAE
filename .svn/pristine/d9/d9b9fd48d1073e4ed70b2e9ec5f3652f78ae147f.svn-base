@@ -1,0 +1,41 @@
+<! doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="style.css" />
+<title>encoder Etudiant</title>
+</head>
+<body>
+	<header> </header>
+	<div id="menu">
+		<p>menu</p>
+	</div>
+	<div id="divContent">
+		<h2>Encoder données Étudiant</h2>
+		<form method="post">
+			<label>Nom : </label><input type="text" id="nomId" name="nom" /><br />
+			<label>Prénom : </label><input type="text" id="prenomId"
+				name="prenom" /><br /> <label>Date de naissance : </label><input
+				type="date" id="dateId" name="datenaissance" /><br /> <label>Nationalité
+				: </label><input type="text" id="nationalitéId" name="nationalité" /><br />
+			<label>Adresse : </label><input type="text" id="adresseID"
+				name="adresse" /><br /> <label>Télephone : </label><input type="tel"
+				id="telID" name="tel" /><br /> <label>E-mail : </label><input
+				type="email" id="emailID" name="email" /><br /> <label>Nombre
+				d'années réussies: </label><input type="number" name="nbAnnees" min="0"
+				max="2" /><br /> <label>Sexe : </label> <input type="radio"
+				name="sexe" value="H" />H<br /> <input type="radio" name="sexe"
+				value="F" />F<br /> <label>Compte IBAN : </label><input type="text"
+				id="compteID" name="compte" /><br /> <label>Titulaire de la
+				carte : </label><input type="text" id="titID" name="tit"
+				placeholder="si vous n'en êtes pas le propriétaire" /><br /> <label>Nom
+				de la banque : </label><input type="text" id="banque" name="banque" /><br />
+			<label>Code Bic: </label><input type="text" id="codeBic"
+				name="codeBic" /><br /> <input type="submit" value="valider"
+				id="validation" />
+		</form>
+	</div>
+	<script type="text/javascript" src="javascript/jquery.js"></script>
+	<script type="text/javascript" src="javascript/script.js"></script>
+</body>
+</html>

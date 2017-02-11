@@ -1,0 +1,15 @@
+<div id="acceuilEtudiant">
+	<div id="mobilites">
+	<h3>Mobilités en cours</h3>
+		<div class="mobilite">
+			<p>Destination:</p>
+			<p>Partenaire:</p>
+			<p>Date de début:</p>
+			<p>Date de fin: </p>
+			<p>Type: </p>
+			<p>Etat: </p>
+			<p>Documents à signer: </p>
+			<button>Annuller Mobilité</button>
+		</div>
+	</div>
+</div>

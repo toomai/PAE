@@ -1,0 +1,71 @@
+
+	<div id="Rechercher">
+		<div id="page-wrapper" class="col-lg-10 md-10">
+			<div class="row">
+				<h3>Veuillez sélectionner un critère de recherche avant d'effectuer celle-ci</h3>
+				<form method="post" class="form-inline" role="form" id="formRecherche">
+						<div class="form-group">
+							<select name="selectRecherche" class="form-control">
+								<option value="Partenaires">Partenaires</option>
+								<option value="Mobilités">Mobilités</option>
+								<option value="Étudiants">Étudiants</option>
+							</select>
+						</div>
+						<div class="input-group custom-search-form col-lg-8">
+							<input class="form-control" placeholder="search..." type="text" name="rechercheInput" id="autoCompletion" />
+							<span class="input-group-btn">
+								<input type="submit" class="btn btn-default" type="button" id="lancerRecherche">
+									<i class="fa fa-search"></i>
+								</button>
+							</span>
+                      </div>
+                </form>
+			</div>
+			<div class="row">
+			<div class="col-lg-10">
+                    <h3>Derniers ajouts</h3>
+					<div class="panel panel-default">
+                        
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Partenaires</th>
+                                            <th>Étudiants</th>
+                                            <th>Mobilités</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Mark</td>
+                                            <td>Otto</td>
+                                            <td>@mdo</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>Jacob</td>
+                                            <td>Thornton</td>
+                                            <td>@fat</td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>Larry</td>
+                                            <td>the Bird</td>
+                                            <td>@twitter</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.table-responsive -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+			</div>
+		</div>
+		<section class	="notification"></section>
+	</div>

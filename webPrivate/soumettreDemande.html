@@ -1,0 +1,50 @@
+
+	<div id="soumettreDemande">
+	<div id="page-wrapper" class="col-lg-8 md-6">
+		<form method="post" class="form-horizontal" role="form" id="formDemandeMobilite">
+		<h2 class="col-sm-offset-4">Soumettre une demande</h2>
+			<div class="form-group">
+				<label class="control-label col-sm-3" for="text">Partenaire: </label>
+				<div class="col-sm-7">
+					<input type="text" id="partenaireId" name="partenaire" class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-3" for="text">Type mobilité: </label>
+				<div class="col-sm-7">
+					<input type="text" id="typeMobId" name="typeMob" class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-3" for="text">Priorité: </label>
+				<div class="col-sm-7">
+					<input type="number" id="prioriteId" name="priorite" class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-3" for="text">Type: </label>
+				<div class="col-sm-4">
+				  <select class="form-control col-sm-3" id="typeSejourId" name="typeSejour">
+					<option>SMS</option>
+					<option>SMP</option>
+				  </select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-3" for="text">Année: </label>
+				<div class="col-sm-4">
+				  <select class="form-control col-sm-3" id="anneeId" name="annee">
+					<option>1ère</option>
+					<option>2ème</option>
+					<option>3ème</option>
+				  </select>
+				</div>
+			</div>
+			<div class="col-sm-offset-8">
+				<button type="submit" class="btn btn-default" id="send_demande">Valider</button>
+			</div>
+		</form>
+		<section class="notification"></section>
+		</div>
+	</div>
+	

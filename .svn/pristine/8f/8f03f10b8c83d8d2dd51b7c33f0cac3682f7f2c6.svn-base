@@ -1,0 +1,9 @@
+Erreurs rencontrées suite aux tests:
+	///// CORRIGE
+	dans la methode authentifie() de uCCcontrollerImpl ->  
+		"if (Authentification.validerMdp(utilFrontEnd.getMdp(), ret.getMdp())" 
+			renvoie un nullException si "ret = utilisateurDao.select(ret);" recois la valeur null;
+				il n'est alors plus possible de faire ret.getMdp();
+	/////
+	
+		
